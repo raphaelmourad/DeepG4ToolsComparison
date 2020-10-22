@@ -1,0 +1,8 @@
+channels:
+  - bioconda
+  - r
+dependencies:
+  - python=3.7.3
+  - biopython
+  - r-base=3.6.1
+  - r-tidyverse

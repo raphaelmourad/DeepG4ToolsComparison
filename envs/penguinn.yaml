@@ -1,0 +1,18 @@
+channels:
+  - r
+  - bioconda
+dependencies:
+  - python=3.6
+  - biopython=1.74
+  - h5py=2.10.0
+  - Keras=2.3.1
+  - numpy=1.17.2
+  - PyYAML=5.3.1
+  - scipy=1.4.1
+  - six=1.14.0
+  - tensorflow=2.0.0
+  - r-base=3.6.1
+  - r-keras=2.2.4
+  - r-devtools
+  - bioconductor-biostrings
+  - r-tidyverse

@@ -1,0 +1,12 @@
+channels:
+  - r
+  - bioconda
+dependencies:
+  - r-base=3.6.1
+  - r-tidyverse
+  - bioconductor-pqsfinder
+  - bioconductor-biostrings
+  - bioconductor-genomicranges
+  - r-rcpp=1.0.1
+  - r-rcppeigen
+  

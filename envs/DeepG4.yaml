@@ -1,0 +1,15 @@
+channels:
+  - bioconda
+  - r
+dependencies:
+  - python=3.7.3
+  - keras=2.3.1
+  - tensorflow=2.0.0
+  - scikit-learn=0.21.2
+  - r-tidyverse
+  - pandas=0.24.2
+  - r-base=3.6.1
+  - r-keras=2.2.4
+  - r-devtools
+  - bioconductor-biostrings
+  

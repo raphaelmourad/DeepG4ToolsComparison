@@ -1,0 +1,7 @@
+channels:
+  - r
+  - bioconda
+dependencies:
+  - r-base=4.0.2
+  - r-tidyverse
+  - bioconductor-biostrings

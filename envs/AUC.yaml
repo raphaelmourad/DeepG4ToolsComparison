@@ -1,0 +1,8 @@
+channels:
+  - bioconda
+  - r
+dependencies:
+  - r-tidyverse
+  - r-base=3.6.1
+  - r-devtools
+  - r-proc

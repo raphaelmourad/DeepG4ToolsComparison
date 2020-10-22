@@ -1,0 +1,12 @@
+channels:
+  - r
+  - bioconda
+dependencies:
+  - r-base=3.6.1
+  - r-tidyverse
+  - r-foreach
+  - r-itertools
+  - r-doparallel
+  - r-data.table
+  - bioconductor-biostrings
+  

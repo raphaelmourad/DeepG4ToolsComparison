@@ -13,7 +13,7 @@ require(itertools)
 # PATH = snakemake@params[["tools"]] %>% as.character()
 
 source(paste0(Quadron_lib,"/lib/PatternFinder.R"))
-#load(paste0(Quadron_lib,"/Quadron.lib"))
+load(paste0(Quadron_lib,"/Quadron.lib"))
 
 formatSeq <- function(myseq){
   list(names(myseq),seq = paste(myseq),length = nchar(myseq))

@@ -1,0 +1,11 @@
+gap_open=-3
+AA=1
+AC=-2
+AG=-2
+AT=2
+CC=1
+CG=2
+CT=-2
+GG=1
+GT=-2
+TT=1

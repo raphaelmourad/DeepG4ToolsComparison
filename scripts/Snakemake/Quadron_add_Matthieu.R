@@ -15,7 +15,10 @@ require(itertools)
 source(paste0(Quadron_lib,"/lib/PatternFinder.R"))
 if(!file.exists(paste0(Quadron_lib,"/Quadron.lib"))){
   message("Building Quadron.lib from source...")
-  source("scripts/imports/Quadron/lib/bitcompile.R")
+  oldpath <- getwd()
+  setwd("scripts/imports/Quadron/lib/")
+  source("bitcompile.R")
+  setwd(oldpath)
 }
 load(paste0(Quadron_lib,"/Quadron.lib"))
 

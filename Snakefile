@@ -28,7 +28,7 @@ EXPERIMENTS = {
 "Promoters_BG4_G4seq_HEKnp_GSE76688_hg19_500b_Ctrl":{"CTRL":"Promoters_BG4_G4seq_HEKnp_GSE76688_hg19_500b_Ctrl","EXP":"Promoters_BG4_G4seq_HEKnp_GSE76688_hg19_500b"},
 "Promoters_BG4_G4seq_K562_GSE107690_hg19_500b_Ctrl":{"CTRL":"Promoters_BG4_G4seq_K562_GSE107690_hg19_500b_Ctrl","EXP":"Promoters_BG4_G4seq_K562_GSE107690_hg19_500b"},
 "Promoters_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_500b_Ctrl":{"CTRL":"Promoters_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_500b_Ctrl","EXP":"Promoters_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_500b"},
-"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_gkmSVM":{"CTRL":"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_gkmSVM","TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42"}
+"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_gkmSVM":{"CTRL":"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_gkmSVM","EXP":"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42"}
 }
 
 #A function build to get the positive set from the dictionnary EXPERIMENTS

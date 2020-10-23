@@ -13,6 +13,9 @@ require(itertools)
 # PATH = snakemake@params[["tools"]] %>% as.character()
 
 source(paste0(Quadron_lib,"/lib/PatternFinder.R"))
+if(!file.exists(paste0(Quadron_lib,"/Quadron.lib"))){
+  source("scripts/imports/Quadron/lib/bitcompile.R")
+}
 load(paste0(Quadron_lib,"/Quadron.lib"))
 
 formatSeq <- function(myseq){

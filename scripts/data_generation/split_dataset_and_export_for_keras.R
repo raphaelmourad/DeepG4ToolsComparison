@@ -17,7 +17,13 @@ dirG4 <- "fasta/"
 
 pos <- "Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b.Fa"
 neg <- "Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM.Fa"
-#Process output dir
+# pos <- "Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b.Fa"
+# neg <- "Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM.Fa"
+# pos <- "Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b.Fa"
+# neg <- "PPeaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM.Fa"
+# pos <- "Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b.Fa"
+# neg <- "Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM.Fa"
+# #Process output dir
 GenName <- neg %>% str_remove(".Fa")
 output_dir <- "rds/"
 output_prefix <- str_c(GenName,percTrain,my.seed,sep="_")

@@ -10,6 +10,12 @@ IN = "fasta/" # Where the fasta are stored
 
 # Experiment to be tested by our pipeline
 EXPERIMENTS = {
+"Peaks_G4seqpm_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_hg19_201b"},
+"Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b"},
+"Peaks_G4seqpm_BG4_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_HaCaT_GSE99205_hg19_201b"},
+"Peaks_G4seqpm_BG4_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_HEKnp_GSE76688_hg19_201b"},
+"Peaks_G4seqpm_BG4_K562_GSE107690_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_K562_GSE107690_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_K562_GSE107690_hg19_201b"},
+
 "Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b"},
 "Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b"},
 "Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b"},
@@ -17,12 +23,17 @@ EXPERIMENTS = {
 "Peaks_G4seq_BG4_HaCaT_GSE99205_hg19_Ctrl_gkmSVM_201b":{"CTRL":"Peaks_G4seq_BG4_HaCaT_GSE99205_hg19_Ctrl_gkmSVM_201b","EXP":"Peaks_G4seq_BG4_HaCaT_GSE99205_hg19_201b"},
 "Peaks_G4seq_BG4_HEKnp_GSE76688_hg19_Ctrl_gkmSVM_201b":{"CTRL":"Peaks_G4seq_BG4_HEKnp_GSE76688_hg19_Ctrl_gkmSVM_201b","EXP":"Peaks_G4seq_BG4_HEKnp_GSE76688_hg19_201b"},
 "Peaks_G4seq_BG4_K562_GSE107690_hg19_Ctrl_gkmSVM_201b":{"CTRL":"Peaks_G4seq_BG4_K562_GSE107690_hg19_Ctrl_gkmSVM_201b","EXP":"Peaks_G4seq_BG4_K562_GSE107690_hg19_201b"},
-#"Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b"},
-#"Peaks_G4seqpm_BG4_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_HaCaT_GSE99205_hg19_201b"},
-#"Peaks_G4seqpm_BG4_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_HEKnp_GSE76688_hg19_201b"},
-#"Peaks_G4seqpm_BG4_K562_GSE107690_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_K562_GSE107690_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_K562_GSE107690_hg19_201b"},
-#"Peaks_G4seqpm_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_hg19_201b"},
-"Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM":{"CTRL":"Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM","EXP":"Peaks_G4seq_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_hg19_201b"},
+
+
+
+"Promoters_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl":{"CTRL":"Promoters_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl","EXP":"Promoters_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b"},
+"Promoters_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl":{"CTRL":"Promoters_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl","EXP":"Promoters_BG4_G4seq_HaCaT_GSE76688_hg19_201b"},
+"Promoters_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl":{"CTRL":"Promoters_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl","EXP":"Promoters_BG4_G4seq_HaCaT_GSE99205_hg19_201b"},
+"Promoters_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl":{"CTRL":"Promoters_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl","EXP":"Promoters_BG4_G4seq_HEKnp_GSE76688_hg19_201b"},
+"Promoters_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl":{"CTRL":"Promoters_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl","EXP":"Promoters_BG4_G4seq_K562_GSE107690_hg19_201b"},
+
+
+
 "Promoters_BG4_G4seq_HaCaT_GSE76688_hg19_500b_Ctrl":{"CTRL":"Promoters_BG4_G4seq_HaCaT_GSE76688_hg19_500b_Ctrl","EXP":"Promoters_BG4_G4seq_HaCaT_GSE76688_hg19_500b"},
 "Promoters_BG4_G4seq_HaCaT_GSE99205_hg19_500b_Ctrl":{"CTRL":"Promoters_BG4_G4seq_HaCaT_GSE99205_hg19_500b_Ctrl","EXP":"Promoters_BG4_G4seq_HaCaT_GSE99205_hg19_500b"},
 "Promoters_BG4_G4seq_HEKnp_GSE76688_hg19_500b_Ctrl":{"CTRL":"Promoters_BG4_G4seq_HEKnp_GSE76688_hg19_500b_Ctrl","EXP":"Promoters_BG4_G4seq_HEKnp_GSE76688_hg19_500b"},

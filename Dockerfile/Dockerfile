@@ -17,3 +17,6 @@ COPY scripts/imports/g4predict /g4predict
 
 RUN cd /g4predict && python setup.py build && python setup.py install
 RUN cd /root/
+RUN apt-get update && apt-get install --yes libbz2-dev liblzma-dev libgsl-dev
+RUN R -e "BiocManager::install(c('PWMEnrich','JASPAR2020','BSgenome','rtracklayer','Rsamtools','Rsamtools','Rhtslib','TFBSTools','motifmatchr'))"
+RUN R -e "install.packages(c('ranger','pROC'))"

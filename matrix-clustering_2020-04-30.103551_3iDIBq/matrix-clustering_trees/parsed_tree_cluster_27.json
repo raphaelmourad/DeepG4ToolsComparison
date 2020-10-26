@@ -1,0 +1,41 @@
+{
+"name": "",
+"children":[
+ {
+ "consensus" : "TtkkkA",
+ "branch" : 1,
+ "id" : "cluster_27_node_1",
+ "ic" : "2.22",
+ "size" : 6,
+ "name" : "cluster_27",
+ "image" : "matrix-clustering_aligned_logos/cluster_27_logo.png",
+ "image_rc" : "matrix-clustering_aligned_logos/cluster_27_logo_rc.png",
+
+ "children": [
+ {
+ "label": "2020-03-04t14-27-25z_m102_kernel_266_number_of_sequence_1637", 
+
+ "image" : "matrix-clustering_aligned_logos/2020-03-04t14-27-25z_m102_kernel_266_number_of_sequence_1637_logo.png",
+ "image_rc" : "matrix-clustering_aligned_logos/2020-03-04t14-27-25z_m102_kernel_266_number_of_sequence_1637_logo_rc.png",
+ "url" : "matrix-clustering_aligned_logos/2020-03-04t14-27-25z_m102_kernel_266_number_of_sequence_1637_logo.png",
+ "name" : "kernel_266_number_of_sequence_1637",
+ "ic" : "2.47",
+ "size" : 6,
+ "title" : "2020-03-04t14-27-25z",
+ "consensus_rc" : "TMMWAA"
+},
+{
+ "label": "2020-03-04t14-27-25z_m186_kernel_492_number_of_sequence_1572", 
+
+ "image" : "matrix-clustering_aligned_logos/2020-03-04t14-27-25z_m186_kernel_492_number_of_sequence_1572_logo.png",
+ "image_rc" : "matrix-clustering_aligned_logos/2020-03-04t14-27-25z_m186_kernel_492_number_of_sequence_1572_logo_rc.png",
+ "url" : "matrix-clustering_aligned_logos/2020-03-04t14-27-25z_m186_kernel_492_number_of_sequence_1572_logo.png",
+ "name" : "kernel_492_number_of_sequence_1572",
+ "ic" : "2.81",
+ "size" : 6,
+ "title" : "2020-03-04t14-27-25z",
+ "consensus_rc" : "TCCCWA"
+} 
+] 
+} 
+]}

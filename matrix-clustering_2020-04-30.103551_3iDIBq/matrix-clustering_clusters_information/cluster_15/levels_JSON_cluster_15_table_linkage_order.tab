@@ -1,0 +1,4 @@
+merged_ID	child_1	child_2
+node_1	2020-03-04t14-27-25z_m128_kernel_332_number_of_sequence_10621	2020-03-04t14-27-25z_m30_kernel_79_number_of_sequence_7529
+node_2	2020-03-04t14-27-25z_m257_kernel_696_number_of_sequence_10264	2020-03-04t14-27-25z_m324_kernel_891_number_of_sequence_13811
+node_3	node_1	node_2

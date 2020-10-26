@@ -1,0 +1,26 @@
+AC  cluster_2
+XX
+ID  cluster_2
+XX
+DE  GGGGcGgGGCG
+P0           a         c         g         t
+1       632.00   2260.00  29771.00   2327.00
+2     12219.00   8906.00  54645.00   2866.00
+3      4745.00  12978.00  97299.00   3010.00
+4      4457.00  16259.00  86042.00  11274.00
+5     19567.00  55752.00  16991.00  25722.00
+6      4861.00  10395.00  94593.00   8183.00
+7     10126.00  11975.00  79641.00  16290.00
+8     13190.00  12256.00  87043.00   5543.00
+9     13975.00  14078.00  81563.00   8416.00
+10     3996.00  79660.00   6632.00   7575.00
+11       27.00   1034.00   6799.00    121.00
+XX
+CC  consensus.strict: GGGGcGgGGCG
+CC  consensus.strict.rc: CGCCCCGCCCC
+CC  consensus.IUPAC: GGGGcGgGGCG
+CC  consensus.IUPAC.rc: CGCCCCGCCCC
+CC  consensus.regexp: GGGGcGgGGCG
+CC  consensus.regexp.rc: CGCCCCGCCCC
+XX
+//

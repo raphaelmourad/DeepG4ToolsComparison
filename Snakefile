@@ -23,7 +23,8 @@ EXPERIMENTS = {
 "Peaks_G4seq_BG4_HaCaT_GSE99205_hg19_Ctrl_gkmSVM_201b":{"CTRL":"Peaks_G4seq_BG4_HaCaT_GSE99205_hg19_Ctrl_gkmSVM_201b","EXP":"Peaks_G4seq_BG4_HaCaT_GSE99205_hg19_201b"},
 "Peaks_G4seq_BG4_HEKnp_GSE76688_hg19_Ctrl_gkmSVM_201b":{"CTRL":"Peaks_G4seq_BG4_HEKnp_GSE76688_hg19_Ctrl_gkmSVM_201b","EXP":"Peaks_G4seq_BG4_HEKnp_GSE76688_hg19_201b"},
 "Peaks_G4seq_BG4_K562_GSE107690_hg19_Ctrl_gkmSVM_201b":{"CTRL":"Peaks_G4seq_BG4_K562_GSE107690_hg19_Ctrl_gkmSVM_201b","EXP":"Peaks_G4seq_BG4_K562_GSE107690_hg19_201b"},
-
+"Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM":{"CTRL":"Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM","EXP":"Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b"},
+"Peaks_G4seq_qG4_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seq_qG4_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seq_qG4_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b"},
 
 
 "Promoters_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl":{"CTRL":"Promoters_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl","EXP":"Promoters_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b"},

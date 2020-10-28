@@ -72,7 +72,7 @@ include: "rules/AUC.smk"
 
 rule all:
   input:
-    expand(OUT+"{sample}/AUC/{sample}.{tools}.tsv",sample=EXPERIMENTS.keys(),tools = ["DeepG4","DeepG4_scan","G4detector_tsv","G4detector_retrained_tsv","penguinn","penguinn_retrained","qparse_mean","qparse_sum","qparse_max","quadron_score","quadron_retrained","pqsfinder","quadparser_max","quadparser_mean","quadparser_sum","G4CatchAll_sum","G4CatchAll_mean","G4CatchAll_max","G4hunter_max","G4hunter_mean","G4hunter_sum","G4hunter_retrained"]) # ,"gqrs_mapper_max","gqrs_mapper_sum","gqrs_mapper_mean"
+    expand(OUT+"{sample}/AUC/{sample}.{tools}.tsv",sample=EXPERIMENTS.keys(),tools = ["DeepG4_G4seqpmBG4","DeepG4","DeepG4_scan","G4detector_tsv","G4detector_retrained_tsv","penguinn","penguinn_retrained","qparse_mean","qparse_sum","qparse_max","quadron_score","quadron_retrained","pqsfinder","quadparser_max","quadparser_mean","quadparser_sum","G4CatchAll_sum","G4CatchAll_mean","G4CatchAll_max","G4hunter_max","G4hunter_mean","G4hunter_sum","G4hunter_retrained"]) # ,"gqrs_mapper_max","gqrs_mapper_sum","gqrs_mapper_mean"
   output:
     expand(OUT+"recap_AUC_{nb}.tsv",nb=[1,2,3,4])
   conda : "envs/AUC.yaml"  

@@ -14,6 +14,22 @@ rule DeepG4:
   shell:
     "Rscript "+DeepG4_script+" {input.fas} {output} {params.model}"
 
+rule DeepG4_G4seqpm_BG4:
+  input:
+    fas = OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+  output:
+    out = OUT+"{sample}/predict/{sample}.DeepG4_G4seqpmBG4"#TSV		
+  benchmark:
+    OUT+"{sample}/benchmarks/{sample}_DeepG4_G4seqpmBG4.benchmark"
+  params:
+    model = "rds/DeepG4_retrained_G4seqpm_BG4_1_1.h5"
+  threads:30
+  conda:
+    "../envs/DeepG4.yaml"
+  shell:
+    "Rscript "+DeepG4_script+" {input.fas} {output} {params.model}"
+
+
 DeepG4_scan_script = "scripts/Snakemake/DeepG4_scan.R"
 rule DeepG4_scan:
   input:

@@ -11,10 +11,12 @@ IN = "fasta/" # Where the fasta are stored
 # Experiment to be tested by our pipeline
 EXPERIMENTS = {
 "Peaks_G4seqpm_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_hg19_201b"},
-"Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b"},
+# "Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b"},
+"TestSet_Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_neg":{"CTRL":"TestSet_Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_neg","EXP":"TestSet_Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42"},
 "Peaks_G4seqpm_BG4_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_HaCaT_GSE99205_hg19_201b"},
 "Peaks_G4seqpm_BG4_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_HEKnp_GSE76688_hg19_201b"},
 "Peaks_G4seqpm_BG4_K562_GSE107690_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seqpm_BG4_K562_GSE107690_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seqpm_BG4_K562_GSE107690_hg19_201b"},
+"TestSet_Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_neg":{"CTRL":"TestSet_Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_neg","EXP":"TestSet_Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42"},
 
 "Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b"},
 "Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b"},
@@ -23,7 +25,8 @@ EXPERIMENTS = {
 "Peaks_G4seq_BG4_HaCaT_GSE99205_hg19_Ctrl_gkmSVM_201b":{"CTRL":"Peaks_G4seq_BG4_HaCaT_GSE99205_hg19_Ctrl_gkmSVM_201b","EXP":"Peaks_G4seq_BG4_HaCaT_GSE99205_hg19_201b"},
 "Peaks_G4seq_BG4_HEKnp_GSE76688_hg19_Ctrl_gkmSVM_201b":{"CTRL":"Peaks_G4seq_BG4_HEKnp_GSE76688_hg19_Ctrl_gkmSVM_201b","EXP":"Peaks_G4seq_BG4_HEKnp_GSE76688_hg19_201b"},
 "Peaks_G4seq_BG4_K562_GSE107690_hg19_Ctrl_gkmSVM_201b":{"CTRL":"Peaks_G4seq_BG4_K562_GSE107690_hg19_Ctrl_gkmSVM_201b","EXP":"Peaks_G4seq_BG4_K562_GSE107690_hg19_201b"},
-"Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM":{"CTRL":"Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM","EXP":"Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b"},
+# "Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM":{"CTRL":"Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM","EXP":"Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b"},
+"TestSet_Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM_0.8_42_Ctrl_neg":{"CTRL":"TestSet_Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM_0.8_42_Ctrl_neg","EXP":"TestSet_Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM_0.8_42"},
 "Peaks_G4seq_qG4_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4seq_qG4_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4seq_qG4_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b"},
 
 
@@ -72,7 +75,7 @@ include: "rules/AUC.smk"
 
 rule all:
   input:
-    expand(OUT+"{sample}/AUC/{sample}.{tools}.tsv",sample=EXPERIMENTS.keys(),tools = ["DeepG4_G4seqpmBG4","DeepG4","DeepG4_scan","G4detector_tsv","G4detector_retrained_tsv","penguinn","penguinn_retrained","qparse_mean","qparse_sum","qparse_max","quadron_score","quadron_retrained","pqsfinder","quadparser_max","quadparser_mean","quadparser_sum","G4CatchAll_sum","G4CatchAll_mean","G4CatchAll_max","G4hunter_max","G4hunter_mean","G4hunter_sum","G4hunter_retrained"]) # ,"gqrs_mapper_max","gqrs_mapper_sum","gqrs_mapper_mean"
+    expand(OUT+"{sample}/AUC/{sample}.{tools}.tsv",sample=EXPERIMENTS.keys(),tools = ["DeepG4Scan_qG4G4seq","DeepG4_qG4G4seq","DeepG4_G4seqpmBG4","DeepG4_BG4G4seq","DeepG4Scan_G4seqpmBG4","DeepG4Scan_BG4G4seq","G4detector_tsv","G4detector_retrained_tsv","penguinn","penguinn_retrained","qparse_mean","qparse_sum","qparse_max","quadron_score","quadron_retrained","pqsfinder","quadparser_max","quadparser_mean","quadparser_sum","G4CatchAll_sum","G4CatchAll_mean","G4CatchAll_max","G4hunter_max","G4hunter_mean","G4hunter_sum","G4hunter_retrained"]) # ,"gqrs_mapper_max","gqrs_mapper_sum","gqrs_mapper_mean"
   output:
     expand(OUT+"recap_AUC_{nb}.tsv",nb=[1,2,3,4])
   conda : "envs/AUC.yaml"  

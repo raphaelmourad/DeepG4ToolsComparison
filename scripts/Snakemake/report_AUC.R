@@ -9,9 +9,9 @@ fres <- res %>%
   mutate(size = str_extract(file,"201b|500b|253b")) %>% 
   mutate(Ctrl = str_extract(file,"Ctrl(_[A-Za-z0-9]+|)")) %>% 
   mutate(Tool = str_extract(basename(file),"\\..+")) %>%
-  mutate(Tool = str_remove(Tool,".8_42_Ctrl_gkmSVM.|.")) %>%
+  mutate(Tool = str_remove(Tool,".8_42_Ctrl_(gkmSVM|neg).|.")) %>%
   mutate(cell_line = str_extract(file,"qG4|HaCaT|K562|HEKnp")) %>% 
-  mutate(TypeExp = str_extract(file,"TestSet_Peaks_BG4_G4seq|Promoters_qG4|Promoters_G4seq_BG4|Promoters_BG4_G4seq|Peaks_G4seqpm_BG4|Peaks_BG4_G4seq|Peaks_G4seq_qG4|Peaks_G4seq_BG4|Peaks_qG4|Peaks_G4seqpm_qG4")) %>% 
+  mutate(TypeExp = str_extract(file,"TestSet_Peaks_qG4|TestSet_Peaks_G4seqpm_BG4|TestSet_Peaks_BG4_G4seq|Promoters_qG4|Promoters_G4seq_BG4|Promoters_BG4_G4seq|Peaks_G4seqpm_BG4|Peaks_BG4_G4seq|Peaks_G4seq_qG4|Peaks_G4seq_BG4|Peaks_qG4|Peaks_G4seqpm_qG4")) %>% 
   dplyr::select(-file)
 
 #Raf en veut

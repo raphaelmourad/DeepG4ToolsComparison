@@ -25,8 +25,8 @@ neg <- "Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM.Fa"
 # neg <- "Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM.Fa"
 # pos <- "Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b.Fa"
 # neg <- "Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM.Fa"
-pos <- "Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b.Fa"
-neg <- "Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM.Fa"
+# pos <- "Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b.Fa"
+# neg <- "Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM.Fa"
 # #Process output dir
 GenName <- neg %>% str_remove(".Fa")
 output_dir <- "rds/"

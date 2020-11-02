@@ -174,16 +174,16 @@ cctext <- cc %>% group_by(Tool) %>% summarise(meanscore = mean(AUC),AUC = sum(AU
 cc %>% 
   ggplot(aes(x=Tool,y=AUC)) +
   geom_bar(aes(fill=Files),stat="identity",col="black") +
-  theme_classic(base_size=20) +
-  theme(legend.text=element_text(size=12),
+  theme_classic(base_size=22) +
+  theme(legend.text=element_text(size=20),
         legend.direction = "vertical",
 legend.box = "horizontal",
-legend.position = c(1,0.025),
-legend.justification = c(1, 0)) +
+# legend.position = c(1,0.025),
+legend.position = "bottom",
+legend.justification = c(0, 0)) +
   coord_flip() +
-  # theme(legend.position = "bottom") +
   geom_text(aes(label=my_text), position=position_stack(0.3), size=5)  + ggtitle("AUC on BG4-G4Seq datasets") +
-  ylab("sum(AUC)") + xlab("Tools") + ylim(c(0,6)) +
+  ylab("sum(AUC)") + xlab("Tools") +
   geom_label(data=cctext,aes(x=Tool,y=AUC,label = round(meanscore,3)),position = position_dodge(width = 1),hjust = -0.1,size=5)-> p4
 print(p4)
 ```

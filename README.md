@@ -113,4 +113,4 @@ Notes:
 
 ### Main result
 
-<img src="figures/README-boxplot1-1.svg" width="100%" />
+<img src="figures/README-boxplot1-1.png" width="100%" />

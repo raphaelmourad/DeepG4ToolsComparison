@@ -158,7 +158,7 @@ Notes:
 
 
 ### Main result
-```{r boxplot1, echo=TRUE, fig.height=12, fig.width=16,dev="svg",echo=F,warning=F,message=F}
+```{r boxplot1, echo=TRUE, fig.height=12, fig.width=16,dev="png",dpi=300,echo=F,warning=F,message=F}
 require(ggplot2)
 #peaks BG4G4seq
 fres <- read_tsv("results/recap_AUC_4.tsv")

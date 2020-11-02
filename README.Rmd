@@ -13,10 +13,175 @@ knitr::opts_chunk$set(
 )
 ```
 
+## DeepG4ToolsComparison: A snakemake pipeline to run and evaluate G4's DNA prediction tools
+
+This pipeline has been built in order to generate the results for our paper : [__DeepG4__: A deep learning approach to predict active G-quadruplexes](https://www.biorxiv.org/content/early/2020/07/23/2020.07.22.215699).
+
+### Overview
+
+
+It's based on [Snakemake](https://snakemake.readthedocs.io/en/stable/) to manage the workflow and [Docker](https://www.docker.com/) to isolate the application and run it with the appropriate tool versions.
+
+
+### Installation
+
+#### Clone the repository :
+
+```bash
+git clone https://github.com/morphos30/DeepG4ToolsComparison.git
+cd DeepG4ToolsComparison
+```
+#### Install the docker image and run it :
+
+```bash
+git clone https://github.com/morphos30/DeepG4ToolsComparison.git
+cd DeepG4ToolsComparison
+docker build . -t morphos30/g4docker -f Dockerfile/Dockerfile
+docker run -it -v /path/To/DeepG4ToolsComparison:/DeepG4ToolsComparison morphos30/g4docker /bin/bash
+```
+
+#### Launch the pipeline :
+
+```bash
+cd /DeepG4ToolsComparison
+snakemake --use-conda -j 30
+```
+
+You have to set the option `--use-conda` in order to install and run each tool in its proper environment.
+
+### Workflow specifications
+
+#### Input
+
+DNA sequences into fasta format, splitted into positive set and negative set, writted into the `fasta` directory.
+
+__Note :__ if you want add a new dataset, edit the `Snakefile` file and add the fasta files in the dictionnary `EXPERIMENTS`, without the `.Fa` extension. example :
+
+`TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_gkmSVM.Fa`
+`TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42.Fa`
+
+```python
+EXPERIMENTS = {
+  "TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_gkmSVM":{"CTRL":"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_gkmSVM","EXP":"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42"}
+}
+```
+
+Where `CTRL` is the negative set and `EXP` is the positive set.
+
+#### Rulegraph :
 
 ```{r, echo=FALSE, out.width="150%", fig.cap=""}
 knitr::include_graphics("rulegraph.svg")
 ```
 
+#### Workflow output for each tools :
 
-### [__DeepG4__: A deep learning approach to predict active G-quadruplexes](https://www.biorxiv.org/content/early/2020/07/23/2020.07.22.215699)
+```{r define, echo=F, message=FALSE, warning=FALSE}
+require(tidyverse)
+require(kableExtra)
+datatools <- tibble(
+  "Outputs" = c("DeepG4_BG4G4seq",
+"DeepG4_G4seqpmBG4",
+"DeepG4_qG4G4seq",
+"DeepG4Scan_BG4G4seq",
+"DeepG4Scan_G4seqpmBG4",
+"DeepG4Scan_qG4G4seq",
+"penguinn_retrained",
+"penguinn",
+"G4detector_retrained",
+"G4detector",
+"quadron_retrained",
+"quadron_score",
+
+"G4CatchAll_max",
+"G4CatchAll_mean",
+"G4CatchAll_sum",
+
+"G4hunter_max",
+"G4hunter_mean",
+"G4hunter_sum",
+"G4hunter_retrained",
+
+
+"qparse_max",
+"qparse_mean",
+"qparse_sum",
+"quadparser_max",
+"quadparser_mean",
+"quadparser_sum",
+"pqsfinder"),
+"Tools" = str_remove(str_extract(Outputs,".+_|.+"),"_"),
+"Methods"=c("DeepG4 using default model",
+            "DeepG4 using custom model trained on __G4seqpmBG4__ dataset",
+            "DeepG4 using custom model trained on __qG4G4seq__ dataset",
+            "DeepG4Scan using default model",
+            "DeepG4Scan using custom model trained on __G4seqpmBG4__ dataset",
+            "DeepG4Scan using custom model trained on __qG4G4seq__ dataset",
+            "penguinn using custom model trained on __BG4G4seq__ dataset",
+            "penguinn using default model",
+            "G4detector using custom model trained on __BG4G4seq__ dataset",
+            "G4detector using default model",
+            "quadron using custom model trained on __BG4G4seq__ dataset",
+            "quadron using default model",
+            
+            "G4CatchAll max score is calculated on each sequence",
+            "G4CatchAll mean score is calculated on each sequence",
+            "G4CatchAll sum score is calculated on each sequence",
+            
+            "G4hunter max score is calculated on each sequence",
+            "G4hunter mean score is calculated on each sequence",
+            "G4hunter sum score is calculated on each sequence",
+            
+            "G4Hunter implemented within a Random Forest",
+            
+            "qparse max score is calculated on each sequence",
+            "qparse mean score is calculated on each sequence",
+            "qparse sum score is calculated on each sequence",
+            "quadparser max score is calculated on each sequence",
+            "quadparser mean score is calculated on each sequence",
+            "quadparser sum score is calculated on each sequence",
+            "default pqsfinder score calculated on each sequence"
+            )
+)
+
+```
+
+```{r show1,echo=F}
+datatools %>% kable(caption = "",format="markdown",escape=F) 
+```
+
+Notes: 
+
+* __BG4G4seq__: `Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM.Fa`,`Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b.Fa`
+* __G4seqpmBG4__: `Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM.Fa`, `Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b.Fa`
+* __qG4G4seq__: `Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM.Fa`  `Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b.Fa`
+
+
+### Main result
+```{r boxplot1, echo=TRUE, fig.height=16, fig.width=28,dev="svg",echo=F,warning=F,message=F}
+require(ggplot2)
+#peaks BG4G4seq
+fres <- read_tsv("results/recap_AUC_4.tsv")
+cc <- fres %>% filter(TypeExp %in% c("TestSet_Peaks_BG4_G4seq","Peaks_BG4_G4seq","TestSet_Peaks_qG4")) %>% 
+  unite(Files,TypeExp,Exp,cell_line,Ctrl) %>%
+  group_by(Files) %>% 
+  arrange(desc(AUC)) %>% mutate(Classement = 1:dplyr::n()) %>% 
+  ungroup() %>% 
+  mutate(my_text = str_c(Classement," (",round(AUC,2),")")) %>% 
+  mutate(Tool = fct_reorder(Tool,AUC,mean))
+cctext <- cc %>% group_by(Tool) %>% summarise(meanscore = mean(AUC),AUC = sum(AUC))
+
+cc %>% 
+  ggplot(aes(x=Tool,y=AUC)) +
+  geom_bar(aes(fill=Files),stat="identity",col="black") +
+  theme_classic(base_size=26) +
+  theme(legend.text=element_text(size=18)) +
+  coord_flip() +
+  # theme(legend.position = "bottom") +
+  geom_text(aes(label=my_text), position=position_stack(0.3), size=8)  + ggtitle("AUC on BG4-G4Seq datasets") +
+  ylab("sum(AUC)") + xlab("Tools") +
+  geom_label(data=cctext,aes(x=Tool,y=AUC,label = round(meanscore,3)),position = position_dodge(width = 1),hjust = -0.1,size=8)-> p4
+print(p4)
+```
+
+

@@ -158,7 +158,7 @@ Notes:
 
 
 ### Main result
-```{r boxplot1, echo=TRUE, fig.height=16, fig.width=28,dev="svg",echo=F,warning=F,message=F}
+```{r boxplot1, echo=TRUE, fig.height=12, fig.width=16,dev="svg",echo=F,warning=F,message=F}
 require(ggplot2)
 #peaks BG4G4seq
 fres <- read_tsv("results/recap_AUC_4.tsv")
@@ -174,13 +174,13 @@ cctext <- cc %>% group_by(Tool) %>% summarise(meanscore = mean(AUC),AUC = sum(AU
 cc %>% 
   ggplot(aes(x=Tool,y=AUC)) +
   geom_bar(aes(fill=Files),stat="identity",col="black") +
-  theme_classic(base_size=26) +
-  theme(legend.text=element_text(size=18)) +
+  theme_classic(base_size=20) +
+  theme(legend.text=element_text(size=8)) +
   coord_flip() +
   # theme(legend.position = "bottom") +
-  geom_text(aes(label=my_text), position=position_stack(0.3), size=8)  + ggtitle("AUC on BG4-G4Seq datasets") +
+  geom_text(aes(label=my_text), position=position_stack(0.3), size=5)  + ggtitle("AUC on BG4-G4Seq datasets") +
   ylab("sum(AUC)") + xlab("Tools") + ylim(c(0,5)) +
-  geom_label(data=cctext,aes(x=Tool,y=AUC,label = round(meanscore,3)),position = position_dodge(width = 1),hjust = -0.1,size=8)-> p4
+  geom_label(data=cctext,aes(x=Tool,y=AUC,label = round(meanscore,3)),position = position_dodge(width = 1),hjust = -0.1,size=5)-> p4
 print(p4)
 ```
 

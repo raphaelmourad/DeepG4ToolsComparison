@@ -183,7 +183,7 @@ legend.position = "bottom",
 legend.justification = c(0, 0)) +
   coord_flip() +
   geom_text(aes(label=my_text), position=position_stack(0.3), size=5)  + ggtitle("AUC on BG4-G4Seq datasets") +
-  ylab("sum(AUC)") + xlab("Tools") +
+  ylab("sum(AUC)") + xlab("Tools") +ylim(c(0,5))+
   geom_label(data=cctext,aes(x=Tool,y=AUC,label = round(meanscore,3)),position = position_dodge(width = 1),hjust = -0.1,size=5)-> p4
 print(p4)
 ```

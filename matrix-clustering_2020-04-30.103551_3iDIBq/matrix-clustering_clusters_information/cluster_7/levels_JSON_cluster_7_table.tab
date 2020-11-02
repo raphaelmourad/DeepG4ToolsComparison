@@ -1,5 +1,0 @@
-;level	cluster	node
-1	2020-03-04t14-27-25z_m61_kernel_170_number_of_sequence_7481,2020-03-04t14-27-25z_m41_kernel_107_number_of_sequence_9254,2020-03-04t14-27-25z_m275_kernel_747_number_of_sequence_8557,2020-03-04t14-27-25z_m24_kernel_67_number_of_sequence_7001,2020-03-04t14-27-25z_m95_kernel_252_number_of_sequence_12175	node_4
-2	2020-03-04t14-27-25z_m61_kernel_170_number_of_sequence_7481,2020-03-04t14-27-25z_m41_kernel_107_number_of_sequence_9254,2020-03-04t14-27-25z_m275_kernel_747_number_of_sequence_8557,2020-03-04t14-27-25z_m24_kernel_67_number_of_sequence_7001	node_3
-3	2020-03-04t14-27-25z_m41_kernel_107_number_of_sequence_9254,2020-03-04t14-27-25z_m275_kernel_747_number_of_sequence_8557,2020-03-04t14-27-25z_m24_kernel_67_number_of_sequence_7001	node_2
-4	2020-03-04t14-27-25z_m275_kernel_747_number_of_sequence_8557,2020-03-04t14-27-25z_m24_kernel_67_number_of_sequence_7001	node_1

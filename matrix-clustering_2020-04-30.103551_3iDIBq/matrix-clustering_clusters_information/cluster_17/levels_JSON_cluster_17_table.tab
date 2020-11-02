@@ -1,6 +1,0 @@
-;level	cluster	node
-1	2020-03-04t14-27-25z_m36_kernel_94_number_of_sequence_6969,2020-03-04t14-27-25z_m27_kernel_71_number_of_sequence_10569,2020-03-04t14-27-25z_m68_kernel_178_number_of_sequence_4317,2020-03-04t14-27-25z_m118_kernel_308_number_of_sequence_7500,2020-03-04t14-27-25z_m313_kernel_847_number_of_sequence_4968,2020-03-04t14-27-25z_m158_kernel_424_number_of_sequence_7267	node_5
-2	2020-03-04t14-27-25z_m36_kernel_94_number_of_sequence_6969,2020-03-04t14-27-25z_m27_kernel_71_number_of_sequence_10569,2020-03-04t14-27-25z_m68_kernel_178_number_of_sequence_4317,2020-03-04t14-27-25z_m118_kernel_308_number_of_sequence_7500,2020-03-04t14-27-25z_m313_kernel_847_number_of_sequence_4968	node_4
-3	2020-03-04t14-27-25z_m36_kernel_94_number_of_sequence_6969,2020-03-04t14-27-25z_m27_kernel_71_number_of_sequence_10569,2020-03-04t14-27-25z_m68_kernel_178_number_of_sequence_4317	node_2
-4	2020-03-04t14-27-25z_m27_kernel_71_number_of_sequence_10569,2020-03-04t14-27-25z_m68_kernel_178_number_of_sequence_4317	node_1
-5	2020-03-04t14-27-25z_m118_kernel_308_number_of_sequence_7500,2020-03-04t14-27-25z_m313_kernel_847_number_of_sequence_4968	node_3

@@ -1,9 +1,0 @@
-merged_ID	child_1	child_2
-node_1	2020-03-04t14-27-25z_m10_kernel_25_number_of_sequence_5805	2020-03-04t14-27-25z_m16_kernel_52_number_of_sequence_5735
-node_2	2020-03-04t14-27-25z_m104_kernel_272_number_of_sequence_4521	2020-03-04t14-27-25z_m259_kernel_701_number_of_sequence_5308
-node_3	node_1	node_2
-node_4	2020-03-04t14-27-25z_m243_kernel_668_number_of_sequence_5552	node_3
-node_5	2020-03-04t14-27-25z_m21_kernel_62_number_of_sequence_5151	node_4
-node_6	2020-03-04t14-27-25z_m106_kernel_276_number_of_sequence_6377	node_5
-node_7	2020-03-04t14-27-25z_m216_kernel_583_number_of_sequence_5430	node_6
-node_8	2020-03-04t14-27-25z_m76_kernel_206_number_of_sequence_1982	node_7

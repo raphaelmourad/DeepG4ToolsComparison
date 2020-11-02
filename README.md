@@ -1,15 +1,15 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## DeepG4ToolsComparison: A snakemake pipeline to run and evaluate G4’s DNA prediction tools
+## DeepG4ToolsComparison: A snakemake pipeline to run and compare G4 DNA prediction tools with DeepG4
 
-This pipeline has been built in order to generate the results for our
+This pipeline generates the results from our
 paper : [**DeepG4**: A deep learning approach to predict active
 G-quadruplexes](https://www.biorxiv.org/content/early/2020/07/23/2020.07.22.215699).
 
 ### Overview
 
-It’s based on [Snakemake](https://snakemake.readthedocs.io/en/stable/)
+It is based on [Snakemake](https://snakemake.readthedocs.io/en/stable/)
 to manage the workflow and [Docker](https://www.docker.com/) to isolate
 the application and run it with the appropriate tool versions.
 
@@ -45,8 +45,8 @@ each tool in its proper environment.
 
 #### Input
 
-DNA sequences into fasta format, splitted into positive set and negative
-set, writted into the `fasta` directory.
+DNA sequences into fasta format, split into positive set and negative
+set, written into the `fasta` directory.
 
 **Note :** if you want add a new dataset, edit the `Snakefile` file and
 add the fasta files in the dictionnary `EXPERIMENTS`, without the `.Fa`

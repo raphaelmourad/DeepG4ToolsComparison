@@ -13,6 +13,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-![logo](rulegraph.svg)
+
+```{r, echo=FALSE, out.width="150%", fig.cap=""}
+knitr::include_graphics("rulegraph.svg")
+```
+
 
 ### [__DeepG4__: A deep learning approach to predict active G-quadruplexes](https://www.biorxiv.org/content/early/2020/07/23/2020.07.22.215699)

@@ -179,7 +179,7 @@ cc %>%
   coord_flip() +
   # theme(legend.position = "bottom") +
   geom_text(aes(label=my_text), position=position_stack(0.3), size=8)  + ggtitle("AUC on BG4-G4Seq datasets") +
-  ylab("sum(AUC)") + xlab("Tools") +
+  ylab("sum(AUC)") + xlab("Tools") + ylim(c(0,5)) +
   geom_label(data=cctext,aes(x=Tool,y=AUC,label = round(meanscore,3)),position = position_dodge(width = 1),hjust = -0.1,size=8)-> p4
 print(p4)
 ```

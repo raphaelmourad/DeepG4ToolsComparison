@@ -6,7 +6,6 @@
 
 #required packages
 require(tidyverse)
-.libPaths(c("lib/Rlib",.libPaths()))
 require(foreach)
 require(itertools)
 

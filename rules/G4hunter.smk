@@ -43,18 +43,18 @@ rule G4Hunter_tsv_format:
 #rule G4HunterRF_retrained
 #take as input the output of G4Hunter rule and output one score per sequence
 #Use a random forest implementation for each treshold of G4Hunter output
-rule G4HunterRF_retrained:
+rule G4HunterRF:
   input:
     OUT+"{sample}/predict/{sample}.G4hunter"
   output:
-    score = OUT+"{sample}/predict/{sample}.G4hunter_retrained"
+    score = OUT+"{sample}/predict/{sample}.G4hunterRF"
   params:
     calc="max",
     model_path = "rds/G4Hunter_retrained_ranger_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Sequence_train.rds"
   threads:30
   conda: "../envs/G4hunter.yaml"
   benchmark:
-    OUT+"{sample}/benchmarks/{sample}_G4HunterRF_retrained.benchmark"
+    OUT+"{sample}/benchmarks/{sample}_G4HunterRF.benchmark"
   shell:
     "Rscript "+G4Hunter_retrained_script+" {params.model_path} {input} {output.score} {params.calc}"
   

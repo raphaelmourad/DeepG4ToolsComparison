@@ -14,11 +14,15 @@ rule GQRS_Mapper:
     with open(output[0],"w") as outfile:
       with open(input.fas, "rU") as handle:
           for record in SeqIO.parse(handle, "fasta"):
-              for line in shell("echo "+str(record.seq)+" | "+GQRS_Mapper_script+" -csv -notitle",iterable=True):
-                if len(line) == 0:
-                  outfile.write(record.id+",,,,,,,,,\n")
-                else:
-                  outfile.write(record.id+","+line+"\n")
+              try:
+                cmd = shell("echo '"+str(record.seq)+"' | timeout 20s "+GQRS_Mapper_script+" -csv -notitle",iterable=True)
+                for line in cmd:
+                  if len(line) == 0:
+                    outfile.write(record.id+",,,,,,,,,\n")
+                  else:
+                    outfile.write(record.id+","+line+"\n")
+              except:
+                outfile.write(record.id+",,,,,,,,,\n")
       
 #rule GQRS_Mappper_tsv_format
 #take as input GQRS_Mapper output and generate a {params.calc} of scores by sequence

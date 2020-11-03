@@ -9,7 +9,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
     echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc 
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && /bin/bash miniconda.sh -b
 ENV PATH /opt/conda/bin:$PATH
-RUN conda install biopython --yes
+RUN conda install -c conda-forge biopython --yes
 RUN conda install -c conda-forge mamba --yes && mamba create --yes -c conda-forge -c bioconda -n snakemake snakemake
 RUN echo "conda activate snakemake" >> ~/.bashrc
 

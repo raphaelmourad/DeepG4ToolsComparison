@@ -25,8 +25,6 @@ cd DeepG4ToolsComparison
 #### Install the docker image and run it :
 
 ``` bash
-git clone https://github.com/morphos30/DeepG4ToolsComparison.git
-cd DeepG4ToolsComparison
 docker build . -t morphos30/g4docker -f Dockerfile/Dockerfile
 docker run -it -v /path/To/DeepG4ToolsComparison:/DeepG4ToolsComparison morphos30/g4docker /bin/bash
 ```

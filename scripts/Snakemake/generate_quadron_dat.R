@@ -19,7 +19,7 @@ input_file <- args[5]
 output_file <- args[6]
 
 source(source_lib)
-registerDoParallel(cores=args[4])
+registerDoParallel(cores=threads)
 #loading Fasta file
 G4pos.seq=readDNAStringSet(input_file)
 #G4pos.seq=readDNAStringSet("pipeline/data/samples/testElissar/Ct_test_Quadron.Fa")

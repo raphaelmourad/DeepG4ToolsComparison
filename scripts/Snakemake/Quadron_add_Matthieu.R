@@ -10,7 +10,15 @@ require(foreach)
 require(itertools)
 
 # PATH = snakemake@params[["tools"]] %>% as.character()
-
+if (!require(xgboost))
+{
+  install.packages(
+    "http://cran.r-project.org/src/contrib/Archive/xgboost/xgboost_0.4-4.tar.gz",
+    repos=NULL,
+    type="source")
+  if(!require(xgboost)) stop("Package not found")
+}
+library(xgboost)
 source(paste0(Quadron_lib,"/lib/PatternFinder.R"))
 if(!file.exists(paste0(Quadron_lib,"/Quadron.lib"))){
   message("Building Quadron.lib from source...")

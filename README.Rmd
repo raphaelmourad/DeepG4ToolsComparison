@@ -13,9 +13,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-## DeepG4ToolsComparison: A snakemake pipeline to run and evaluate G4's DNA prediction tools
+## DeepG4ToolsComparison: A snakemake pipeline to run and compare G4 DNA prediction tools with DeepG4
 
-This pipeline has been built in order to generate the results for our paper : [__DeepG4__: A deep learning approach to predict active G-quadruplexes](https://www.biorxiv.org/content/early/2020/07/23/2020.07.22.215699).
+his pipeline generates the results from our paper : [__DeepG4__: A deep learning approach to predict active G-quadruplexes](https://www.biorxiv.org/content/early/2020/07/23/2020.07.22.215699).
 
 ### Overview
 
@@ -47,13 +47,13 @@ cd /DeepG4ToolsComparison
 snakemake --use-conda -j 30
 ```
 
-You have to set the option `--use-conda` in order to install and run each tool in its proper environment.
+ou have to set the option `--use-conda` in order to install and run each tool in its proper environment.
 
 ### Workflow specifications
 
 #### Input
 
-DNA sequences into fasta format, splitted into positive set and negative set, writted into the `fasta` directory.
+DNA sequences into fasta format, split into positive set and negative set, written into the fasta directory.
 
 __Note :__ if you want add a new dataset, edit the `Snakefile` file and add the fasta files in the dictionnary `EXPERIMENTS`, without the `.Fa` extension. example :
 
@@ -100,7 +100,7 @@ datatools <- tibble(
 "G4hunter_max",
 "G4hunter_mean",
 "G4hunter_sum",
-"G4hunter_retrained",
+"G4hunterRF",
 
 
 "qparse_max",
@@ -109,6 +109,10 @@ datatools <- tibble(
 "quadparser_max",
 "quadparser_mean",
 "quadparser_sum",
+"gqrs_mapper_max",
+"gqrs_mapper_mean",
+"gqrs_mapper_sum",
+
 "pqsfinder"),
 "Tools" = str_remove(str_extract(Outputs,".+_|.+"),"_"),
 "Methods"=c("DeepG4 using default model",
@@ -140,6 +144,9 @@ datatools <- tibble(
             "quadparser max score is calculated on each sequence",
             "quadparser mean score is calculated on each sequence",
             "quadparser sum score is calculated on each sequence",
+            "gqrs_mapper max score is calculated on each sequence",
+            "gqrs_mapper mean score is calculated on each sequence",
+            "gqrs_mapper sum score is calculated on each sequence",
             "default pqsfinder score calculated on each sequence"
             )
 )
@@ -154,7 +161,7 @@ Notes:
 
 * __BG4G4seq__: `Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM.Fa`,`Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b.Fa`
 * __G4seqpmBG4__: `Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM.Fa`, `Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b.Fa`
-* __qG4G4seq__: `Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM.Fa`  `Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b.Fa`
+* __qG4G4seq__: `Peaks_qG4_G4seq_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_Ctrl_gkmSVM_Ctrl_gkmSVM.Fa`  `Peaks_qG4_G4seq_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_Ctrl_gkmSVM.Fa`
 
 
 ### Main result
@@ -162,29 +169,34 @@ Notes:
 require(ggplot2)
 #peaks BG4G4seq
 fres <- read_tsv("results/recap_AUC_4.tsv")
-cc <- fres %>% filter(TypeExp %in% c("TestSet_Peaks_BG4_G4seq","Peaks_BG4_G4seq","TestSet_Peaks_qG4")) %>% 
+cc <- fres %>% filter(TypeExp %in% c("TestSet_Peaks_BG4_G4seq","Peaks_BG4_G4seq","TestSet_Peaks_qG4","TestSet_Peaks_G4seqpm_BG4")) %>% 
   unite(Files,TypeExp,Exp,cell_line,Ctrl) %>%
   group_by(Files) %>% 
   arrange(desc(AUC)) %>% mutate(Classement = 1:dplyr::n()) %>% 
   ungroup() %>% 
-  mutate(my_text = str_c(Classement," (",round(AUC,2),")")) %>% 
+  mutate(my_text = str_c(Classement," (",round(AUC,3),")")) %>% 
   mutate(Tool = fct_reorder(Tool,AUC,mean))
 cctext <- cc %>% group_by(Tool) %>% summarise(meanscore = mean(AUC),AUC = sum(AUC))
 
-cc %>% 
-  ggplot(aes(x=Tool,y=AUC)) +
-  geom_bar(aes(fill=Files),stat="identity",col="black") +
+cc%>% 
+  mutate(Files =as.factor(Files)) %>% 
+  ggplot(aes(x=fct_reorder(Tool,AUC,mean),y=AUC,fill=Files)) +
+  geom_bar(alpha=0.25,stat="identity",col="black") +
   theme_classic(base_size=22) +
   theme(legend.text=element_text(size=20),
         legend.direction = "vertical",
-legend.box = "horizontal",
-# legend.position = c(1,0.025),
-legend.position = "bottom",
-legend.justification = c(0, 0)) +
+        legend.box = "horizontal",
+        # legend.position = c(1,0.025),
+        legend.position = "bottom",
+        axis.title.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.text.x = element_blank(),
+        legend.justification = c(0, 0)) +
   coord_flip() +
-  geom_text(aes(label=my_text), position=position_stack(0.3), size=5)  + ggtitle("AUC on BG4-G4Seq datasets") +
-  ylab("sum(AUC)") + xlab("Tools") +ylim(c(0,5))+
-  geom_label(data=cctext,aes(x=Tool,y=AUC,label = round(meanscore,3)),position = position_dodge(width = 1),hjust = -0.1,size=5)-> p4
+  geom_text(aes(label=my_text), position=position_stack(0.45), size=4) +
+  ylab("sum(AUC)") + xlab("Tools") +ylim(c(0,6)) +
+  geom_label(data=cctext,aes(x=Tool,y=AUC,label = round(meanscore,3)),fill="white",position = position_dodge(width = 1),hjust = -0.1,size=5) +
+  scale_fill_brewer(palette = "Set1") + ggtitle("AUC on (BG4|qG4)-G4Seq datasets")-> p4
 print(p4)
 ```
 

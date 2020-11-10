@@ -6,7 +6,7 @@ library(keras)
 
 #Load dataset (already splited)
 # BG4_data <- readRDS("rds/Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Sequence_train_test.rds")
-BG4_data <- readRDS("rds/Peaks_qG4-ChIP-seq-of-breast-cancer-PDTX_breastCancer_G4seq_hg19_253b_Ctrl_gkmSVM_0.8_42_Sequence_train_test.rds")
+BG4_data <- readRDS("rds/Peaks_qG4_G4seq_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_Ctrl_gkmSVM_0.8_42_Sequence_train_test.rds")
 
 c(x_train, y_train) %<-% BG4_data$train
 c(x_test, y_test) %<-% BG4_data$test
@@ -21,3 +21,4 @@ p_res_train <- cowplot::plot_grid(plotlist = test[2:3])
 print(p_res_train)
 rocRFall <- pROC::roc(as.factor( y_test),test[[1]][,1],ci=T)
 aucRF <- pROC::auc(rocRFall)
+

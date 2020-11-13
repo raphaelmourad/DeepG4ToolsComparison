@@ -1,4 +1,8 @@
+channels:
+  - bioconda
+  - r
 dependencies:
   - python=2.7.17
+  - biopython
   - numpy
-  - regex  
+  - regex 

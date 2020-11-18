@@ -48,8 +48,7 @@ set, written into the fasta directory.
 
 **Note :** if you want add a new dataset, edit the `Snakefile` file and
 add the fasta files in the dictionnary `EXPERIMENTS`, without the `.Fa`
-extension. example
-:
+extension. example :
 
 `TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_gkmSVM.Fa`
 `TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42.Fa`
@@ -60,8 +59,7 @@ EXPERIMENTS = {
 }
 ```
 
-Where `CTRL` is the negative set and `EXP` is the positive
-set.
+Where `CTRL` is the negative set and `EXP` is the positive set.
 
 #### Rulegraph :
 

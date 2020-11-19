@@ -177,6 +177,7 @@ cc <- fres %>% filter(TypeExp %in% c("TestSet_Peaks_BG4_G4seq","Peaks_BG4_G4seq"
                                          "Peaks_qG4_breast-cancer-PDTX_qG4_Ctrl_gkmSVM")))) %>% 
   filter(!Tool %in% c("qparse_mean","qparse_max","quadparser_mean","quadparser_sum","DeepG4_G4seqpmBG4","DeepG4_qG4G4seq","G4hunter_max","G4hunter_mean","G4CatchAll_max","G4CatchAll_mean","gqrs_mapper_max","gqrs_mapper_sum")) %>%
   filter(!str_detect(Tool,"DeepG4Scan")) %>%
+  mutate(Tool = str_remove(Tool,"_tsv|_sum|_mean|max")) %>% 
   group_by(Files) %>% 
   arrange(desc(AUC)) %>% mutate(Classement = 1:dplyr::n()) %>% 
   ungroup() %>% 

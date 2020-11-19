@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 ## DeepG4ToolsComparison: A snakemake pipeline to run and compare G4 DNA prediction tools with DeepG4
 
-his pipeline generates the results from our paper : [__DeepG4__: A deep learning approach to predict active G-quadruplexes](https://www.biorxiv.org/content/early/2020/07/23/2020.07.22.215699).
+This pipeline generates the results from our paper : [__DeepG4__: A deep learning approach to predict active G-quadruplexes](https://www.biorxiv.org/content/early/2020/07/23/2020.07.22.215699).
 
 ### Overview
 
@@ -45,7 +45,7 @@ cd /DeepG4ToolsComparison
 snakemake --use-conda -j 30
 ```
 
-ou have to set the option `--use-conda` in order to install and run each tool in its proper environment.
+You have to set the option `--use-conda` in order to install and run each tool in its proper environment.
 
 ### Workflow specifications
 

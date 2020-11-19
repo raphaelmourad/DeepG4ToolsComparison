@@ -36,7 +36,7 @@ cd /DeepG4ToolsComparison
 snakemake --use-conda -j 30
 ```
 
-ou have to set the option `--use-conda` in order to install and run each
+you have to set the option `--use-conda` in order to install and run each
 tool in its proper environment.
 
 ### Workflow specifications

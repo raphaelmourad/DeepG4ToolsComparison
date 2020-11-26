@@ -26,8 +26,11 @@ cd DeepG4ToolsComparison
 
 ``` bash
 docker build . -t morphos30/g4docker -f Dockerfile/Dockerfile
-docker run -it -v /path/To/DeepG4ToolsComparison:/DeepG4ToolsComparison morphos30/g4docker /bin/bash
+docker run -it -v $(pwd):/DeepG4ToolsComparison morphos30/g4docker /bin/bash
 ```
+
+Where `$(pwd)` is the working directory of `DeepG4ToolsComparison` on
+your computer.
 
 #### Launch the pipeline :
 

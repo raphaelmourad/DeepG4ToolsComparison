@@ -28,8 +28,6 @@ def GetCtrl(wildcards):
 #Scripts locations
 
 
-G4iMGrinder = "scripts/Snakemake/G4iMGrinder.R"
-
 include: "rules/fasta.smk"
 include: "rules/G4hunter.smk"
 include: "rules/penguinn.smk"
@@ -52,22 +50,6 @@ rule all:
   conda : "envs/AUC.yaml"  
   script:
     "scripts/Snakemake/report_AUC.R"
-
-rule G4iMGrinder:
-  input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
-  output:
-    out = OUT+"{sample}/predict/{sample}.G4iMGrinder"#TSV		
-  benchmark:
-    OUT+"{sample}/benchmarks/{sample}_G4iMGrinder.benchmark"
-  threads:30
-  conda:
-    "envs/Rv4.yaml"
-  script:
-    G4iMGrinder
-
-
-
 
 
 

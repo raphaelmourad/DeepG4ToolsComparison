@@ -4,7 +4,7 @@
 # From scripts/data_generation/quadron_features_for_quadron_retrained.R
 if (!require(xgboost))
 {
-  install.packages("https://cran.r-project.org/src/contrib/xgboost_1.2.0.1.tar.gz",repos=NULL,type="source")
+  install.packages("http://cran.r-project.org/src/contrib/Archive/xgboost/xgboost_1.2.0.1.tar.gz",repos=NULL,type="source")
   if(!require(xgboost)) stop("Package not found")
 }
 library(xgboost)

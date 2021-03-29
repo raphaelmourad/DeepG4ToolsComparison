@@ -1,0 +1,98 @@
+MODELS={
+
+"DeepG4_classic":"results/runs/DeepG4_classic_rescale_BW_sampling_02_03_2021/2021-03-02T16-17-28Z/best_model.h5",
+"DeepG4_ATAC":"results/runs/DeepG4_ATAC_rescale_BW_sampling_02_03_2021/2021-03-02T16-01-34Z/best_model.h5",
+"DeepG4_classic_old":"results/runs/DeepG4_classic_rescale_BW_sampling_old_hypparams/2021-03-03T11-24-25Z/best_model.h5"
+}
+def getModel(wildcards):
+	return(MODELS[wildcards.model])
+
+one_hot_ext = "_OneHot_train_test.rds"
+
+
+
+AUPR_rds=[
+#	"Peaks_BG4_G4seq_GSE107690_K562_hg19_201b_stranded_74_bin_positions_sampled_for_auPR",
+#"Peaks_BG4_G4seq_GSE76688_HaCaT_hg19_201b_stranded_74_bin_positions_sampled_for_auPR",
+#"Peaks_BG4_G4seq_GSE76688_HEKnp_hg19_201b_stranded_74_bin_positions_sampled_for_auPR",
+#"Peaks_BG4_G4seq_GSE99205_HaCaT_hg19_201b_stranded_74_bin_positions_sampled_for_auPR",
+"Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_74_bin_positions_sampled_for_auPR",
+"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_74_bin_positions_sampled_for_auPR",
+"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_74_bin_positions_sampled_for_auPR",
+"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_74_bin_positions_sampled_for_auPR",
+"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b_74_bin_positions_sampled_for_auPR",
+#"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b_stranded_74_bin_positions_sampled_for_auPR",
+"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b_74_bin_positions_sampled_for_auPR",
+#"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b_stranded_74_bin_positions_sampled_for_auPR",
+"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_74_bin_positions_sampled_for_auPR",
+#"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_stranded_74_bin_positions_sampled_for_auPR",
+"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_74_bin_positions_sampled_for_auPR",
+#"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_stranded_74_bin_positions_sampled_for_auPR"
+]
+
+AUC_rds=[
+#"Peaks_BG4_G4seq_GSE107690_K562_hg19_201b_stranded_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+#"Peaks_BG4_G4seq_GSE76688_HaCaT_hg19_201b_stranded_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+#"Peaks_BG4_G4seq_GSE76688_HEKnp_hg19_201b_stranded_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+#"Peaks_BG4_G4seq_GSE99205_HaCaT_hg19_201b_stranded_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+"Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+#"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b_stranded_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+#"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b_stranded_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+#"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_stranded_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+#"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_stranded_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+"Peaks_qG4_G4seq_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling",
+"Peaks_qG4_G4seq_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_stranded_Ctrl_gkmSVM_0.8_42_rescale_BW_sampling"
+]
+
+
+rule all:
+	input:
+		expand("results/AUC_AUPR/AUC/{RDS}/{model}_auc.pdf",model = MODELS.keys(),RDS=AUC_rds)
+		#expand("results/AUC_AUPR/AUPR/{RDS}/{model}_aupr.pdf",model = MODELS.keys(),RDS=AUPR_rds)
+
+
+AUC_script = "scripts/Snakemake/AUC_script.R"
+rule AUC:
+  input:
+    "results/predictions/{RDS}/{model}_prediction.tsv"
+  output:
+    pdf="results/AUC_AUPR/AUC/{RDS}/{model}_auc.pdf"
+  shell:
+    "Rscript "+AUC_script+" {input} {output.pdf}"
+
+AUPR_script = "scripts/Snakemake/AUPR_script.R"
+rule AUPR:
+  input:
+    "results/predictions/{RDS}/{model}_prediction.tsv"
+  output:
+    pdf="results/AUC_AUPR/AUPR/{RDS}/{model}_aupr.pdf"
+  shell:
+    "Rscript "+AUPR_script+" {input} {output.pdf}"
+
+
+pred_script = "scripts/Snakemake/predict_script.R"
+rule prediction_auc:
+	input:
+		model=getModel,
+		rds="data/rds/oneHot/{RDS}"+one_hot_ext
+	output:
+		"results/predictions/{RDS}/{model}_prediction.tsv"
+	shell:
+		"Rscript "+pred_script+" {input} {output}"
+		
+pred_script_pr = "scripts/Snakemake/predict_script_aupr.R"
+rule prediction_aupr:
+	input:
+		model=getModel,
+		rds="data/rds/BinAUPR/{RDS}"+one_hot_ext
+	output:
+		"results/predictions/{RDS}/{model}_prediction.tsv"
+	shell:
+		"Rscript "+pred_script_pr+" {input} {output}"

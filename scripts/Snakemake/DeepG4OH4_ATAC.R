@@ -31,7 +31,7 @@ custom_model <- args[4]
 
 
 G4pos.seq=readDNAStringSet(input_fas)
-ATAC.res <- readRDS(input_rds)
+ATAC.res <- input_rds %>% read_tsv(col_names = F) %>% pull(1)
 resFreq <- Biostrings::letterFrequency(G4pos.seq, "N", as.prob = T)
 testNFreq <- as.vector(resFreq > 0.1)
 my.names <- names(G4pos.seq)[!testNFreq]

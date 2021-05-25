@@ -1,0 +1,661 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 40
+Rules claiming more threads will be scaled down.
+Job counts:
+	count	jobs
+	85	AUC
+	16	DeepG4OH4
+	6	G4Hunter
+	8	G4HunterRF
+	18	G4Hunter_tsv_format
+	7	G4detector
+	7	G4detector_retrained
+	7	G4detector_retrained_tsv_format
+	7	G4detector_tsv_format
+	1	all
+	85	other_metrics
+	8	penguinn
+	6	penguinn_retrained
+	8	quadron_features
+	8	quadron_retrained
+	7	quadron_score
+	284
+
+[Tue May 25 13:04:36 2021]
+rule DeepG4OH4:
+    input: results/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM/fasta/merged/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM_merged.Fa, results/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM/fasta/merged/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM_atac_merged.tsv
+    output: results/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM/predict/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM.ATACDeepG4_classictuningOH5
+    jobid: 374
+    benchmark: results/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM/benchmarks/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM_ATACDeepG4__classictuningOH5.benchmark
+    wildcards: sample=Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM, model=classictuningOH5
+    threads: 30
+
+Activating conda environment: /DeepG4ToolsComparison/.snakemake/conda/5b6340a6
+WARNING: ignoring environment value of R_HOME
+Registered S3 methods overwritten by 'ggplot2':
+  method         from 
+  [.quosures     rlang
+  c.quosures     rlang
+  print.quosures rlang
+Registered S3 method overwritten by 'rvest':
+  method            from
+  read_xml.response xml2
+── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
+✔ ggplot2 3.1.1       ✔ purrr   0.3.2  
+✔ tibble  2.1.1       ✔ dplyr   0.8.0.1
+✔ tidyr   0.8.3       ✔ stringr 1.4.0  
+✔ readr   1.3.1       ✔ forcats 0.4.0  
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following object is masked from ‘package:keras’:
+
+    normalize
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Parsed with column specification:
+cols(
+  `0.03831058531529494` = col_double()
+)
+2021-05-25 13:04:46.709794: I tensorflow/core/platform/cpu_feature_guard.cc:145] This TensorFlow binary is optimized with Intel(R) MKL-DNN to use the following CPU instructions in performance critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
+To enable them in non-MKL-DNN operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-05-25 13:04:46.747003: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3092920000 Hz
+2021-05-25 13:04:46.753559: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55e323594ee0 executing computations on platform Host. Devices:
+2021-05-25 13:04:46.753595: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+2021-05-25 13:04:46.756202: I tensorflow/core/common_runtime/process_util.cc:115] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.
+[Tue May 25 13:04:49 2021]
+Finished job 374.
+1 of 284 steps (0.35%) done
+
+[Tue May 25 13:04:49 2021]
+rule G4detector_retrained:
+    input: results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/fasta/merged/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM_trimmed.Fa
+    output: results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/predict/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM.G4detector_retrained
+    jobid: 199
+    benchmark: results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/benchmarks/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM_G4detector_retrained.benchmark
+    wildcards: sample=Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM
+    threads: 30
+
+
+[Tue May 25 13:04:49 2021]
+rule other_metrics:
+    input: results/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM/predict/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM.ATACDeepG4_classictuningOH5
+    output: results/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM/other_metrics/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM.ATACDeepG4_classictuningOH5.tsv
+    jobid: 373
+    benchmark: results/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM/benchmarks/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM_ATACDeepG4_classictuningOH5_others_metrics.benchmark
+    wildcards: sample=Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM, tool=ATACDeepG4_classictuningOH5
+
+
+[Tue May 25 13:04:49 2021]
+rule AUC:
+    input: results/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM/predict/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM.ATACDeepG4_classictuningOH5
+    output: results/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM/AUC/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM.ATACDeepG4_classictuningOH5.tsv
+    jobid: 647
+    benchmark: results/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM/benchmarks/Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM_ATACDeepG4_classictuningOH5_AUC.benchmark
+    wildcards: sample=Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM, tool=ATACDeepG4_classictuningOH5
+
+Activating conda environment: /DeepG4ToolsComparison/.snakemake/conda/dd273de5
+Activating conda environment: /DeepG4ToolsComparison/.snakemake/conda/c003e307
+Activating conda environment: /DeepG4ToolsComparison/.snakemake/conda/6766da4e
+WARNING: ignoring environment value of R_HOME
+WARNING: ignoring environment value of R_HOME
+Registered S3 methods overwritten by 'ggplot2':
+  method         from 
+  [.quosures     rlang
+  c.quosures     rlang
+  print.quosures rlang
+Registered S3 method overwritten by 'rvest':
+  method            from
+  read_xml.response xml2
+── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
+✔ ggplot2 3.1.1       ✔ purrr   0.3.2  
+✔ tibble  2.1.1       ✔ dplyr   0.8.0.1
+✔ tidyr   0.8.3       ✔ stringr 1.4.0  
+✔ readr   1.3.1       ✔ forcats 0.4.0  
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+Type 'citation("pROC")' for a citation.
+
+Attaching package: ‘pROC’
+
+The following objects are masked from ‘package:stats’:
+
+    cov, smooth, var
+
+Parsed with column specification:
+cols(
+  names = col_character(),
+  score = col_double()
+)
+null device 
+          1 
+[Tue May 25 13:04:52 2021]
+Finished job 647.
+2 of 284 steps (0.70%) done
+── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
+✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+✔ tibble  3.1.2     ✔ dplyr   1.0.6
+✔ tidyr   1.1.3     ✔ stringr 1.4.0
+✔ readr   1.4.0     ✔ forcats 0.5.1
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+2021-05-25 13:04:52.269485: I tensorflow/core/platform/cpu_feature_guard.cc:145] This TensorFlow binary is optimized with Intel(R) MKL-DNN to use the following CPU instructions in performance critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
+To enable them in non-MKL-DNN operations, rebuild TensorFlow with the appropriate compiler flags.
+For binary classification, the first factor level is assumed to be the event.
+Use the argument `event_level = "second"` to alter this as needed.
+
+Attaching package: ‘yardstick’
+
+The following object is masked from ‘package:readr’:
+
+    spec
+
+2021-05-25 13:04:52.298887: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3092920000 Hz
+2021-05-25 13:04:52.301792: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55df33593610 executing computations on platform Host. Devices:
+2021-05-25 13:04:52.301819: I tensorflow/compiler/xla/service/service.cc:175]   StreamExecutor device (0): Host, Default Version
+2021-05-25 13:04:52.308126: I tensorflow/core/common_runtime/process_util.cc:115] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.
+
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  names = col_character(),
+  score = col_double()
+)
+
+[Tue May 25 13:04:52 2021]
+Finished job 373.
+3 of 284 steps (1%) done
+Using TensorFlow backend.
+[Tue May 25 13:04:58 2021]
+Finished job 199.
+4 of 284 steps (1%) done
+
+[Tue May 25 13:04:58 2021]
+rule G4detector_retrained_tsv_format:
+    input: results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/fasta/merged/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM_trimmed.Fa, results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/predict/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM.G4detector_retrained
+    output: results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/predict/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM.G4detector_retrained_tsv
+    jobid: 198
+    benchmark: results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/benchmarks/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM_G4detector_retrained_tsv.benchmark
+    wildcards: sample=Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM
+
+
+[Tue May 25 13:04:58 2021]
+rule quadron_features:
+    input: results/Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM/fasta/merged/Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM_merged.Fa
+    output: results/Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM/predict/Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM.quadron_features
+    jobid: 154
+    benchmark: results/Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM/benchmarks/Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM_features_quadron.benchmark
+    wildcards: sample=Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM
+    threads: 30
+
+Activating conda environment: /DeepG4ToolsComparison/.snakemake/conda/f9ed0804
+Activating conda environment: /DeepG4ToolsComparison/.snakemake/conda/221d41cf
+WARNING: ignoring environment value of R_HOME
+WARNING: ignoring environment value of R_HOME
+Loading required package: Biostrings
+Loading required package: BiocGenerics
+Loading required package: parallel
+Loading required package: Biostrings
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+
+Attaching package: ‘S4Vectors’
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+Loading required package: XVector
+Loading required package: XVector
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: tidyverse
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Loading required package: itertools
+Loading required package: iterators
+Loading required package: tidyverse
+Registered S3 methods overwritten by 'ggplot2':
+  method         from 
+  [.quosures     rlang
+  c.quosures     rlang
+  print.quosures rlang
+Registered S3 methods overwritten by 'ggplot2':
+  method         from 
+  [.quosures     rlang
+  c.quosures     rlang
+  print.quosures rlang
+Registered S3 method overwritten by 'rvest':
+  method            from
+  read_xml.response xml2
+── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
+✔ ggplot2 3.1.1       ✔ purrr   0.3.2  
+✔ tibble  2.1.1       ✔ dplyr   0.8.0.1
+✔ tidyr   0.8.3       ✔ stringr 1.4.0  
+✔ readr   1.3.1       ✔ forcats 0.4.0  
+Registered S3 method overwritten by 'rvest':
+  method            from
+  read_xml.response xml2
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::collapse()   masks Biostrings::collapse(), IRanges::collapse()
+✖ dplyr::combine()    masks BiocGenerics::combine()
+✖ purrr::compact()    masks XVector::compact()
+✖ dplyr::desc()       masks IRanges::desc()
+✖ tidyr::expand()     masks S4Vectors::expand()
+✖ dplyr::filter()     masks stats::filter()
+✖ dplyr::first()      masks S4Vectors::first()
+✖ dplyr::lag()        masks stats::lag()
+✖ ggplot2::Position() masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()     masks IRanges::reduce()
+✖ dplyr::rename()     masks S4Vectors::rename()
+✖ dplyr::slice()      masks XVector::slice(), IRanges::slice()
+── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
+✔ ggplot2 3.1.1       ✔ purrr   0.3.2  
+✔ tibble  2.1.1       ✔ dplyr   0.8.0.1
+✔ tidyr   0.8.3       ✔ stringr 1.4.0  
+✔ readr   1.3.1       ✔ forcats 0.4.0  
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::collapse()   masks Biostrings::collapse(), IRanges::collapse()
+✖ dplyr::combine()    masks BiocGenerics::combine()
+✖ purrr::compact()    masks XVector::compact()
+✖ dplyr::desc()       masks IRanges::desc()
+✖ tidyr::expand()     masks S4Vectors::expand()
+✖ dplyr::filter()     masks stats::filter()
+✖ dplyr::first()      masks S4Vectors::first()
+✖ dplyr::lag()        masks stats::lag()
+✖ ggplot2::Position() masks BiocGenerics::Position(), base::Position()
+✖ purrr::reduce()     masks IRanges::reduce()
+✖ dplyr::rename()     masks S4Vectors::rename()
+✖ dplyr::slice()      masks XVector::slice(), IRanges::slice()
+Loading required package: foreach
+Parsed with column specification:
+cols(
+  X1 = col_double(),
+  seq = col_character(),
+  score = col_double()
+)
+
+Attaching package: ‘foreach’
+
+The following objects are masked from ‘package:purrr’:
+
+    accumulate, when
+
+Loading required package: xgboost
+Warning message:
+Missing column names filled in: 'X1' [1] 
+[Tue May 25 13:05:03 2021]
+Finished job 198.
+5 of 284 steps (2%) done
+
+[Tue May 25 13:05:03 2021]
+rule AUC:
+    input: results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/predict/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM.G4detector_retrained_tsv
+    output: results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/AUC/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM.G4detector_retrained_tsv.tsv
+    jobid: 575
+    benchmark: results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/benchmarks/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM_G4detector_retrained_tsv_AUC.benchmark
+    wildcards: sample=Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM, tool=G4detector_retrained_tsv
+
+
+[Tue May 25 13:05:03 2021]
+rule other_metrics:
+    input: results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/predict/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM.G4detector_retrained_tsv
+    output: results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/other_metrics/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM.G4detector_retrained_tsv.tsv
+    jobid: 197
+    benchmark: results/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM/benchmarks/Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM_G4detector_retrained_tsv_others_metrics.benchmark
+    wildcards: sample=Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM, tool=G4detector_retrained_tsv
+
+
+Attaching package: ‘xgboost’
+
+The following object is masked from ‘package:dplyr’:
+
+    slice
+
+The following object is masked from ‘package:XVector’:
+
+    slice
+
+The following object is masked from ‘package:IRanges’:
+
+    slice
+
+Activating conda environment: /DeepG4ToolsComparison/.snakemake/conda/c003e307
+Activating conda environment: /DeepG4ToolsComparison/.snakemake/conda/6766da4e
+WARNING: ignoring environment value of R_HOME
+WARNING: ignoring environment value of R_HOME
+Registered S3 methods overwritten by 'ggplot2':
+  method         from 
+  [.quosures     rlang
+  c.quosures     rlang
+  print.quosures rlang
+Registered S3 method overwritten by 'rvest':
+  method            from
+  read_xml.response xml2
+── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
+✔ ggplot2 3.1.1       ✔ purrr   0.3.2  
+✔ tibble  2.1.1       ✔ dplyr   0.8.0.1
+✔ tidyr   0.8.3       ✔ stringr 1.4.0  
+✔ readr   1.3.1       ✔ forcats 0.4.0  
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+Type 'citation("pROC")' for a citation.
+
+Attaching package: ‘pROC’
+
+The following objects are masked from ‘package:stats’:
+
+    cov, smooth, var
+
+Parsed with column specification:
+cols(
+  names = col_character(),
+  score = col_double()
+)
+── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──
+✔ ggplot2 3.3.3     ✔ purrr   0.3.4
+✔ tibble  3.1.2     ✔ dplyr   1.0.6
+✔ tidyr   1.1.3     ✔ stringr 1.4.0
+✔ readr   1.4.0     ✔ forcats 0.5.1
+null device 
+          1 
+[Tue May 25 13:05:06 2021]
+Finished job 575.
+6 of 284 steps (2%) done
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+For binary classification, the first factor level is assumed to be the event.
+Use the argument `event_level = "second"` to alter this as needed.
+
+Attaching package: ‘yardstick’
+
+The following object is masked from ‘package:readr’:
+
+    spec
+
+
+── Column specification ────────────────────────────────────────────────────────
+cols(
+  names = col_character(),
+  score = col_double()
+)
+
+[Tue May 25 13:05:06 2021]
+Finished job 197.
+7 of 284 steps (2%) done
+There were 50 or more warnings (use warnings() to see the first 50)
+[Tue May 25 13:05:23 2021]
+Finished job 154.
+8 of 284 steps (3%) done
+
+[Tue May 25 13:05:23 2021]
+rule DeepG4OH4:
+    input: results/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM/fasta/merged/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM_merged.Fa, results/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM/fasta/merged/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM_atac_merged.tsv
+    output: results/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM/predict/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM.ATACDeepG4_ATACnormBG
+    jobid: 440
+    benchmark: results/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM/benchmarks/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM_ATACDeepG4__ATACnormBG.benchmark
+    wildcards: sample=Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM, model=ATACnormBG
+    threads: 30
+
+Activating conda environment: /DeepG4ToolsComparison/.snakemake/conda/5b6340a6
+WARNING: ignoring environment value of R_HOME
+Registered S3 methods overwritten by 'ggplot2':
+  method         from 
+  [.quosures     rlang
+  c.quosures     rlang
+  print.quosures rlang
+Registered S3 method overwritten by 'rvest':
+  method            from
+  read_xml.response xml2
+── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
+✔ ggplot2 3.1.1       ✔ purrr   0.3.2  
+✔ tibble  2.1.1       ✔ dplyr   0.8.0.1
+✔ tidyr   0.8.3       ✔ stringr 1.4.0  
+✔ readr   1.3.1       ✔ forcats 0.4.0  
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+Loading required package: BiocGenerics
+Loading required package: parallel
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:parallel’:
+
+    clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    clusterExport, clusterMap, parApply, parCapply, parLapply,
+    parLapplyLB, parRapply, parSapply, parSapplyLB
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following object is masked from ‘package:keras’:
+
+    normalize
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames,
+    dirname, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget,
+    order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply,
+    union, unique, unsplit, which, which.max, which.min
+
+Loading required package: S4Vectors
+Loading required package: stats4
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following object is masked from ‘package:tidyr’:
+
+    expand
+
+The following object is masked from ‘package:base’:
+
+    expand.grid
+
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+The following object is masked from ‘package:purrr’:
+
+    reduce
+
+Loading required package: XVector
+
+Attaching package: ‘XVector’
+
+The following object is masked from ‘package:purrr’:
+
+    compact
+
+
+Attaching package: ‘Biostrings’
+
+The following object is masked from ‘package:base’:
+
+    strsplit
+
+Parsed with column specification:
+cols(
+  `0` = col_double()
+)
+Error in py_call_impl(callable, dots$args, dots$keywords) : 
+  OSError: SavedModel file does not exist at: rds/runs/DeepG4_ATAC_rescale_BW_by_bg_5kb_seuil_2_19_04_2021/2021-04-19T16-32-14Z/best_model.h5/{saved_model.pbtxt|saved_model.pb}
+
+Detailed traceback: 
+  File "/DeepG4ToolsComparison/.snakemake/conda/5b6340a6/lib/python3.7/site-packages/tensorflow_core/python/keras/saving/save.py", line 149, in load_model
+    loader_impl.parse_saved_model(filepath)
+  File "/DeepG4ToolsComparison/.snakemake/conda/5b6340a6/lib/python3.7/site-packages/tensorflow_core/python/saved_model/loader_impl.py", line 83, in parse_saved_model
+    constants.SAVED_MODEL_FILENAME_PB))
+Calls: <Anonymous> -> do.call -> <Anonymous> -> py_call_impl
+Execution halted
+[Tue May 25 13:05:34 2021]
+Error in rule DeepG4OH4:
+    jobid: 440
+    output: results/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM/predict/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM.ATACDeepG4_ATACnormBG
+    conda-env: /DeepG4ToolsComparison/.snakemake/conda/5b6340a6
+    shell:
+        Rscript scripts/Snakemake/DeepG4OH4_ATAC.R results/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM/fasta/merged/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM_merged.Fa results/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM/fasta/merged/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM_atac_merged.tsv results/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM/predict/Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM.ATACDeepG4_ATACnormBG rds/runs/DeepG4_ATAC_rescale_BW_by_bg_5kb_seuil_2_19_04_2021/2021-04-19T16-32-14Z/best_model.h5
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: /DeepG4ToolsComparison/.snakemake/log/2021-05-25T130435.374170.snakemake.log

@@ -129,4 +129,4 @@ else: #test with existing model
     score = model.predict(x_test, batch_size=batch_size)
     score_list = [a for b in score.tolist() for a in b]
     df3 = pd.DataFrame({"seq": x_Test, "score": score_list})
-    df3.to_csv("G4detector_scores.csv")
+    df3.to_csv(sys.argv[4])

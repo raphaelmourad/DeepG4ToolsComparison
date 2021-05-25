@@ -13,7 +13,7 @@ rule G4detector:
   conda:
     "../envs/G4detector.yaml"
   shell:
-    "python "+G4detector_script+" test {input.fas} {params.model} && mv G4detector_scores.csv {output}"
+    "python "+G4detector_script+" test {input.fas} {params.model} {output}"
 
 
 rule rule G4detector_tsv_format:
@@ -42,7 +42,7 @@ rule G4detector_retrained:
   conda:
     "../envs/G4detector.yaml"
   shell:
-    "python "+G4detector_script+" test {input.fas} {params.model} && mv G4detector_scores.csv {output}"
+    "python "+G4detector_script+" test {input.fas} {params.model} {output}"
 
 
 

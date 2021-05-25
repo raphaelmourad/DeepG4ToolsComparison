@@ -2,7 +2,7 @@ require(tidyverse)
 
 # files <- list.files("results", recursive=TRUE, full.names=TRUE)
 # files <- files[str_detect(files,"AUC/.*\\.tsv")]
-res <- snakemake@input  %>% map(read_tsv) %>% bind_rows()
+res <- snakemake@input  %>% map(read_tsv) %>% map(gather,key = metric,value = value,-file) %>% bind_rows()
 
 fres <- res %>% 
   mutate(Exp = str_extract(file,"GSE[0-9]+|breast-cancer-PDTX")) %>% 
@@ -16,13 +16,12 @@ fres <- res %>%
 
 #Raf en veut
 fres  %>% 
-  unite(Ctrl_dat,TypeExp,Exp,cell_line,Ctrl,size) %>% 
-  spread(key = Ctrl_dat,value = AUC) %>% write_tsv(snakemake@output[[1]])
+  unite(Ctrl_dat,TypeExp,Exp,cell_line,Ctrl,size) %>% unite(Ctrl_dat,metric,Ctrl_dat) %>% spread(key = Ctrl_dat,value = value) %>% write_tsv(snakemake@output[[1]])
 #Raf en veut
-fres  %>%  group_by(Exp,Ctrl,cell_line,TypeExp,size) %>% arrange(desc(AUC)) %>% slice(1) %>% 
+fres  %>%  group_by(Exp,Ctrl,cell_line,TypeExp,size,metric) %>% arrange(desc(value)) %>% slice(1) %>% 
   write_tsv(snakemake@output[[2]])
 
-fres %>% unite(Ctrl_dat,TypeExp,Exp,cell_line,Ctrl,size) %>% group_by(Ctrl_dat) %>% arrange(desc(AUC)) %>% mutate(Classement = 1:dplyr::n()) %>% 
-  dplyr::select(-AUC) %>% spread(key = Ctrl_dat,value = Classement) %>% write_tsv(snakemake@output[[3]])
+fres %>% unite(Ctrl_dat,TypeExp,Exp,cell_line,Ctrl,size) %>% group_by(Ctrl_dat,metric) %>% arrange(desc(value)) %>% mutate(Classement = 1:dplyr::n()) %>% 
+  dplyr::select(-value) %>% spread(key = Ctrl_dat,value = Classement) %>% write_tsv(snakemake@output[[3]])
 
 fres %>% write_tsv(snakemake@output[[4]])

@@ -54,12 +54,12 @@ You have to set the option `--use-conda` in order to install and run each tool i
 
 #### Input
 
-DNA sequences into fasta format, split into positive set and negative set, written into the fasta directory.
+* DNA sequences into bed format, split into positive set and negative set, written into the bed directory.
 
-__Note :__ if you want add a new dataset, edit the `Snakefile` file and add the fasta files in the dictionnary `EXPERIMENTS`, without the `.Fa` extension. example :
+__Note :__ if you want add a new dataset, edit the `Snakefile` file and add the bed files in the dictionnary `EXPERIMENTS`, without the `.bed` extension. Example :
 
-`TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_gkmSVM.Fa`
-`TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42.Fa`
+`TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Ctrl_gkmSVM.bed`
+`TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42.bed`
 
 ```python
 EXPERIMENTS = {
@@ -68,6 +68,32 @@ EXPERIMENTS = {
 ```
 
 Where `CTRL` is the negative set and `EXP` is the positive set.
+
+* DNA Accessibility (ATAC-seq/DNAse-seq/MNase-seq) in bigwig format or directly the averaged value for each sequence in a `one-column tsv` file.
+
+```python
+ATACFILE = {
+	"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM":["ATAC_entinostat_mean.bw"]
+}
+```
+
+or `one-column tsv` file in `results/{Experiment_name}/fasta/merged/{Experiment_name}_atac_merged.tsv`. Example :
+
+`results/TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM/fasta/merged/TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_atac_merged.tsv`
+
+```
+head TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_atac_merged.tsv 
+0.01628741641898675
+0.028752257447422012
+0.028878783223623482
+0.055516399884055316
+0.02825982069785745
+0.03582923041809851
+0.023904436394151577
+0.07724288611280039
+0.01740800116454673
+0.05779605688479145
+```
 
 #### Rulegraph :
 
@@ -81,12 +107,9 @@ knitr::include_graphics("rulegraph.svg")
 require(tidyverse)
 require(kableExtra)
 datatools <- tibble(
-  "Outputs" = c("DeepG4_BG4G4seq",
-"DeepG4_G4seqpmBG4",
-"DeepG4_qG4G4seq",
-"DeepG4Scan_BG4G4seq",
-"DeepG4Scan_G4seqpmBG4",
-"DeepG4Scan_qG4G4seq",
+  "Outputs" = c(
+    "ATACDeepG4_ATACnormBG",
+"ATACDeepG4_classictuningOH5",
 "penguinn_retrained",
 "penguinn",
 "G4detector_retrained",
@@ -116,12 +139,9 @@ datatools <- tibble(
 
 "pqsfinder"),
 "Tools" = str_remove(str_extract(Outputs,".+_|.+"),"_"),
-"Methods"=c("DeepG4 using default model",
-            "DeepG4 using custom model trained on __G4seqpmBG4__ dataset",
-            "DeepG4 using custom model trained on __qG4G4seq__ dataset",
-            "DeepG4Scan using default model",
-            "DeepG4Scan using custom model trained on __G4seqpmBG4__ dataset",
-            "DeepG4Scan using custom model trained on __qG4G4seq__ dataset",
+"Methods"=c(
+      "DeepG4 using accessibily (DeepG4 in paper)",
+"DeepG4 without accessibility (DeepG4* in paper)",
             "penguinn using custom model trained on __BG4G4seq__ dataset",
             "penguinn using default model",
             "G4detector using custom model trained on __BG4G4seq__ dataset",
@@ -158,88 +178,155 @@ datatools <- tibble(
 datatools %>% kable(caption = "",format="markdown",escape=F) 
 ```
 
-Notes: 
-
-* __BG4G4seq__: `Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM.Fa`,`Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b.Fa`
-* __G4seqpmBG4__: `Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM.Fa`, `Peaks_G4seqpm_BG4_HaCaT_GSE76688_hg19_201b.Fa`
-* __qG4G4seq__: `Peaks_qG4_G4seq_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_Ctrl_gkmSVM_Ctrl_gkmSVM.Fa`  `Peaks_qG4_G4seq_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_Ctrl_gkmSVM.Fa`
-
 
 ### Main result
 
 ```{r boxplot1, echo=TRUE, fig.height=12, fig.width=16,dev="png",dpi=150,echo=F,warning=F,message=F}
 require(ggplot2)
 #peaks BG4G4seq
+
 fres <- read_tsv("results/recap_AUC_4.tsv")
-cc <- fres %>% filter(TypeExp %in% c("TestSet_Peaks_BG4_G4seq","Peaks_BG4_G4seq","Peaks_qG4")) %>% 
-  unite(Files,TypeExp,Exp,cell_line,Ctrl) %>%
-  mutate(Files = factor(Files,levels = rev(c("TestSet_Peaks_BG4_G4seq_GSE76688_HaCaT_Ctrl_gkmSVM",
-                                         "Peaks_BG4_G4seq_GSE99205_HaCaT_Ctrl_gkmSVM",
-                                         "Peaks_BG4_G4seq_GSE76688_HEKnp_Ctrl_gkmSVM",
-                                         "Peaks_BG4_G4seq_GSE107690_K562_Ctrl_gkmSVM",
-                                         "Peaks_qG4_breast-cancer-PDTX_qG4_Ctrl_gkmSVM")))) %>% 
-  filter(!Tool %in% c("qparse_mean","qparse_max","quadparser_mean","quadparser_sum","DeepG4_G4seqpmBG4","DeepG4_qG4G4seq","G4hunter_max","G4hunter_mean","G4CatchAll_max","G4CatchAll_mean","gqrs_mapper_max","gqrs_mapper_sum")) %>%
-  filter(!str_detect(Tool,"DeepG4Scan")) %>%
-  mutate(Tool = str_remove(Tool,"_tsv|_sum|_mean|max")) %>% 
-  group_by(Files) %>% 
-  arrange(desc(AUC)) %>% mutate(Classement = 1:dplyr::n()) %>% 
-  ungroup() %>% 
-  mutate(my_text = str_c(Classement," (",round(AUC,3),")"))
+cc <- fres %>% 
+  filter(metric == "AUC") %>% dplyr::select(-metric) %>% dplyr::rename(AUC="value") %>% 
+  filter(Tool %in% c("ATACDeepG4_ATACnormBG","ATACDeepG4_classictuningOH5","G4detector_tsv","penguinn","quadron_score")) %>%
+  filter(TypeExp %in% c("Peaks_G4P_G4seq","TestSet_Peaks_BG4_G4seq","Peaks_BG4_G4seq","Peaks_qG4","TestSet_Peaks_G4seqpm_BG4")) %>%
+  # unite(Files,TypeExp,Exp,cell_line,Ctrl) %>%
+  unite(Files,Exp,cell_line) %>%
+  group_by(Files) %>%
+  arrange(desc(AUC)) %>% mutate(Classement = 1:dplyr::n()) %>%
+  ungroup() %>%
+  mutate(Tool = str_replace(Tool,"ATACDeepG4_classictuningOH5","DeepG4*")) %>% 
+  mutate(Tool = str_replace(Tool,"ATACDeepG4_ATACnormBG","DeepG4")) %>% 
+  mutate(my_text = ifelse(Tool %in% c("DeepG4*","DeepG4"),str_c(Classement,"\n(",round(AUC,2),")"),
+                          str_c(Classement,"\n(",round(AUC,1),")"))) %>% 
+  mutate(Tool = str_remove_all(Tool,"^ATAC|_ATACtuningOH5|_sum|_mean|_tsv|_max|_score")) %>% 
+  mutate(Tool = str_to_title(Tool)) %>% 
+  mutate(Tool = str_replace(Tool,"_"," ")) %>% 
+  mutate(Tool = str_replace(Tool,"g4","G4")) %>% 
+  mutate(Tool = fct_reorder(Tool,AUC,mean)) 
 cctext <- cc %>% group_by(Tool) %>% summarise(meanscore = mean(AUC),AUC = sum(AUC))
 
-
-
-cc%>% 
-  mutate(Files =as.factor(Files)) %>% 
+cc <- cc %>% 
+  separate(Files,into = c("GSE","Exp")) %>% 
+  mutate(Files = case_when(
+    GSE == "GSE76688" & Exp == "HaCaT" ~ glue::glue("{Exp} (Testing set, {GSE})"),
+    GSE == "GSE99205" & Exp == "HaCaT" ~ glue::glue("{Exp} (Independent experiment, {GSE})"),
+    TRUE ~ glue::glue("{Exp} ({GSE})")
+  )) %>% dplyr::select(-GSE,-Exp) %>% 
+  mutate(Files =factor(Files,levels = rev(c("HaCaT (Testing set, GSE76688)","HaCaT (Independent experiment, GSE99205)","K562 (GSE107690)","HEKnp (GSE76688)","293T (GSE133379)","A549 (GSE133379)","H1975 (GSE133379)","HeLaS3 (GSE133379)")))) %>% 
+  mutate(col_Files = fct_recode(Files,`#2c3e50`="HaCaT (Testing set, GSE76688)",`#2980b9`="HaCaT (Independent experiment, GSE99205)",`#8e44ad`="K562 (GSE107690)",`#27ae60`="HEKnp (GSE76688)",`#c0392b`="293T (GSE133379)",`#d35400`="A549 (GSE133379)",`#16a085`="H1975 (GSE133379)",`#60a3bc`="HeLaS3 (GSE133379)"))
+  
+cc%>%
   ggplot(aes(x=fct_reorder(Tool,AUC,mean),y=AUC,fill=Files)) +
-  geom_bar(alpha=0.25,stat="identity",col="black") +
-  theme_classic(base_size=22) +
-  theme(legend.text=element_text(size=20),
-        legend.direction = "vertical",
-        legend.box = "horizontal",
-        # legend.position = c(1,0.025),
-        legend.position = "bottom",
-        axis.title.y = element_blank(),
-        axis.ticks.x = element_blank(),
-        axis.text.x = element_blank(),
-        legend.justification = c(0, 0)) +
-  coord_flip() +
-  geom_text(aes(label=my_text),size=6, position=position_stack(0.45)) +
-  scale_size_manual(values= c(4,4.8))+
-  ylab("sum(AUC)") + xlab("Tools") +ylim(c(0,5)) +
+  geom_bar(alpha=0.3,stat="identity",col="black") +
+  scale_y_continuous(expand=c(0,0),limits = c(0,9)) +
+  coord_flip(clip="off") +
+  geom_text(aes(label=my_text), position=position_stack(0.45), size=4,lineheight = .8) +
+  ylab("Ranking (AUROC) on 9 datasets\n(Rectangle width is proportional to AUROC)") + xlab("Tools") +
   geom_label(data=cctext,aes(x=Tool,y=AUC,label = round(meanscore,3)),fill="white",position = position_dodge(width = 1),hjust = -0.1,size=5) +
-  scale_fill_brewer(palette = "Set1")-> p4
-print(p4)
+  scale_fill_manual("Dataset",values = levels(cc$col_Files)) -> p3
+print(p3)
 
-#OLD FIG
-# cc <- fres %>% filter(TypeExp %in% c("TestSet_Peaks_BG4_G4seq","Peaks_BG4_G4seq","TestSet_Peaks_qG4","TestSet_Peaks_G4seqpm_BG4")) %>% 
-#   unite(Files,TypeExp,Exp,cell_line,Ctrl) %>%
-#   group_by(Files) %>% 
-#   arrange(desc(AUC)) %>% mutate(Classement = 1:dplyr::n()) %>% 
-#   ungroup() %>% 
-#   mutate(my_text = str_c(Classement," (",round(AUC,3),")")) %>% 
-#   mutate(Tool = fct_reorder(Tool,AUC,mean))
-# cctext <- cc %>% group_by(Tool) %>% summarise(meanscore = mean(AUC),AUC = sum(AUC))
-# 
-# cc%>% 
-#   mutate(Files =as.factor(Files)) %>% 
-#   ggplot(aes(x=fct_reorder(Tool,AUC,mean),y=AUC,fill=Files)) +
-#   geom_bar(alpha=0.25,stat="identity",col="black") +
-#   theme_classic(base_size=22) +
-#   theme(legend.text=element_text(size=20),
-#         legend.direction = "vertical",
-#         legend.box = "horizontal",
-#         # legend.position = c(1,0.025),
-#         legend.position = "bottom",
-#         axis.title.y = element_blank(),
-#         axis.ticks.x = element_blank(),
-#         axis.text.x = element_blank(),
-#         legend.justification = c(0, 0)) +
-#   coord_flip() +
-#   geom_text(aes(label=my_text), position=position_stack(0.45), size=4) +
-#   ylab("sum(AUC)") + xlab("Tools") +ylim(c(0,6)) +
-#   geom_label(data=cctext,aes(x=Tool,y=AUC,label = round(meanscore,3)),fill="white",position = position_dodge(width = 1),hjust = -0.1,size=5) +
-#   scale_fill_brewer(palette = "Set1") + ggtitle("AUC on (BG4|qG4)-G4Seq datasets")-> p4
-# print(p4)
+
+```
+
+
+```{r boxplot2, echo=TRUE, fig.height=12, fig.width=16,dev="png",dpi=150,echo=F,warning=F,message=F}
+require(ggplot2)
+#peaks BG4G4seq
+
+fres <- read_tsv("results/recap_AUC_4.tsv")
+cc <- fres %>% 
+  filter(metric == "accuracy") %>% dplyr::select(-metric) %>% dplyr::rename(accuracy="value") %>% 
+  filter(Tool %in% c("ATACDeepG4_ATACnormBG","ATACDeepG4_classictuningOH5","G4detector_tsv","penguinn","quadron_score")) %>%
+  filter(TypeExp %in% c("Peaks_G4P_G4seq","TestSet_Peaks_BG4_G4seq","Peaks_BG4_G4seq","Peaks_qG4","TestSet_Peaks_G4seqpm_BG4")) %>%
+  # unite(Files,TypeExp,Exp,cell_line,Ctrl) %>%
+  unite(Files,Exp,cell_line) %>%
+  group_by(Files) %>%
+  arrange(desc(accuracy)) %>% mutate(Classement = 1:dplyr::n()) %>%
+  ungroup() %>%
+  mutate(Tool = str_replace(Tool,"ATACDeepG4_classictuningOH5","DeepG4*")) %>% 
+  mutate(Tool = str_replace(Tool,"ATACDeepG4_ATACnormBG","DeepG4")) %>% 
+  mutate(my_text = ifelse(Tool %in% c("DeepG4*","DeepG4"),str_c(Classement,"\n(",round(accuracy,2),")"),
+                          str_c(Classement,"\n(",round(accuracy,1),")"))) %>% 
+  mutate(Tool = str_remove_all(Tool,"^ATAC|_ATACtuningOH5|_sum|_mean|_tsv|_max|_score")) %>% 
+  mutate(Tool = str_to_title(Tool)) %>% 
+  mutate(Tool = str_replace(Tool,"_"," ")) %>% 
+  mutate(Tool = str_replace(Tool,"g4","G4")) %>% 
+  mutate(Tool = fct_reorder(Tool,accuracy,mean)) 
+cctext <- cc %>% group_by(Tool) %>% summarise(meanscore = mean(accuracy),accuracy = sum(accuracy))
+
+cc <- cc %>% 
+  separate(Files,into = c("GSE","Exp")) %>% 
+  mutate(Files = case_when(
+    GSE == "GSE76688" & Exp == "HaCaT" ~ glue::glue("{Exp} (Testing set, {GSE})"),
+    GSE == "GSE99205" & Exp == "HaCaT" ~ glue::glue("{Exp} (Independent experiment, {GSE})"),
+    TRUE ~ glue::glue("{Exp} ({GSE})")
+  )) %>% dplyr::select(-GSE,-Exp) %>% 
+  mutate(Files =factor(Files,levels = rev(c("HaCaT (Testing set, GSE76688)","HaCaT (Independent experiment, GSE99205)","K562 (GSE107690)","HEKnp (GSE76688)","293T (GSE133379)","A549 (GSE133379)","H1975 (GSE133379)","HeLaS3 (GSE133379)")))) %>% 
+  mutate(col_Files = fct_recode(Files,`#2c3e50`="HaCaT (Testing set, GSE76688)",`#2980b9`="HaCaT (Independent experiment, GSE99205)",`#8e44ad`="K562 (GSE107690)",`#27ae60`="HEKnp (GSE76688)",`#c0392b`="293T (GSE133379)",`#d35400`="A549 (GSE133379)",`#16a085`="H1975 (GSE133379)",`#60a3bc`="HeLaS3 (GSE133379)"))
+  
+cc%>%
+  ggplot(aes(x=fct_reorder(Tool,accuracy,mean),y=accuracy,fill=Files)) +
+  geom_bar(alpha=0.3,stat="identity",col="black") +
+  scale_y_continuous(expand=c(0,0),limits = c(0,9)) +
+  coord_flip(clip="off") +
+  geom_text(aes(label=my_text), position=position_stack(0.45), size=4,lineheight = .8) +
+  ylab("Ranking (Accuracy) on 9 datasets\n(Rectangle width is proportional to accuracy)") + xlab("Tools") +
+  geom_label(data=cctext,aes(x=Tool,y=accuracy,label = round(meanscore,3)),fill="white",position = position_dodge(width = 1),hjust = -0.1,size=5) +
+  scale_fill_manual("Dataset",values = levels(cc$col_Files)) -> p3
+print(p3)
+
+
+```
+
+
+
+```{r boxplot3, echo=TRUE, fig.height=12, fig.width=16,dev="png",dpi=150,echo=F,warning=F,message=F}
+require(ggplot2)
+#peaks BG4G4seq
+
+fres <- read_tsv("results/recap_AUC_4.tsv")
+cc <- fres %>% 
+  filter(metric == "FDR") %>% dplyr::select(-metric) %>% dplyr::rename(FDR="value") %>% mutate(precision = 1-FDR) %>% dplyr::select(-FDR) %>% 
+  filter(Tool %in% c("ATACDeepG4_ATACnormBG","ATACDeepG4_classictuningOH5","G4detector_tsv","penguinn","quadron_score")) %>%
+  filter(TypeExp %in% c("Peaks_G4P_G4seq","TestSet_Peaks_BG4_G4seq","Peaks_BG4_G4seq","Peaks_qG4","TestSet_Peaks_G4seqpm_BG4")) %>%
+  # unite(Files,TypeExp,Exp,cell_line,Ctrl) %>%
+  unite(Files,Exp,cell_line) %>%
+  group_by(Files) %>%
+  arrange(desc(precision)) %>% mutate(Classement = 1:dplyr::n()) %>%
+  ungroup() %>%
+  mutate(Tool = str_replace(Tool,"ATACDeepG4_classictuningOH5","DeepG4*")) %>% 
+  mutate(Tool = str_replace(Tool,"ATACDeepG4_ATACnormBG","DeepG4")) %>% 
+  mutate(my_text = ifelse(Tool %in% c("DeepG4*","DeepG4"),str_c(Classement,"\n(",round(precision,4),")"),
+                          str_c(Classement,"\n(",round(precision,3),")"))) %>% 
+  mutate(Tool = str_remove_all(Tool,"^ATAC|_ATACtuningOH5|_sum|_mean|_tsv|_max|_score")) %>% 
+  mutate(Tool = str_to_title(Tool)) %>% 
+  mutate(Tool = str_replace(Tool,"_"," ")) %>% 
+  mutate(Tool = str_replace(Tool,"g4","G4")) %>% 
+  mutate(Tool = fct_reorder(Tool,precision,mean)) 
+cctext <- cc %>% group_by(Tool) %>% summarise(meanscore = mean(precision),precision = sum(precision))
+
+cc <- cc %>% 
+  separate(Files,into = c("GSE","Exp")) %>% 
+  mutate(Files = case_when(
+    GSE == "GSE76688" & Exp == "HaCaT" ~ glue::glue("{Exp} (Testing set, {GSE})"),
+    GSE == "GSE99205" & Exp == "HaCaT" ~ glue::glue("{Exp} (Independent experiment, {GSE})"),
+    TRUE ~ glue::glue("{Exp} ({GSE})")
+  )) %>% dplyr::select(-GSE,-Exp) %>% 
+  mutate(Files =factor(Files,levels = rev(c("HaCaT (Testing set, GSE76688)","HaCaT (Independent experiment, GSE99205)","K562 (GSE107690)","HEKnp (GSE76688)","293T (GSE133379)","A549 (GSE133379)","H1975 (GSE133379)","HeLaS3 (GSE133379)")))) %>% 
+  mutate(col_Files = fct_recode(Files,`#2c3e50`="HaCaT (Testing set, GSE76688)",`#2980b9`="HaCaT (Independent experiment, GSE99205)",`#8e44ad`="K562 (GSE107690)",`#27ae60`="HEKnp (GSE76688)",`#c0392b`="293T (GSE133379)",`#d35400`="A549 (GSE133379)",`#16a085`="H1975 (GSE133379)",`#60a3bc`="HeLaS3 (GSE133379)"))
+  
+cc%>%
+  ggplot(aes(x=fct_reorder(Tool,precision,mean),y=precision,fill=Files)) +
+  geom_bar(alpha=0.3,stat="identity",col="black") +
+  scale_y_continuous(expand=c(0,0),limits = c(0,9)) +
+  coord_flip(clip="off") +
+  geom_text(aes(label=my_text), position=position_stack(0.45), size=4,lineheight = .8) +
+  ylab("Ranking (precision) on 9 datasets\n(Rectangle width is proportional to precision)") + xlab("Tools") +
+  geom_label(data=cctext,aes(x=Tool,y=precision,label = round(meanscore,3)),fill="white",position = position_dodge(width = 1),hjust = -0.1,size=5) +
+  scale_fill_manual("Dataset",values = levels(cc$col_Files)) -> p3
+print(p3)
+
 
 ```

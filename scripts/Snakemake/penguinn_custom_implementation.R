@@ -6,7 +6,7 @@ library(keras)
 library(reticulate)
 library(tidyverse)
 library(Biostrings)
-source("scripts/functions/data_handling.R")
+# source("scripts/functions/data_handling.R")
 source_python("scripts/imports/penguinn/sequence_to_ohe.py")
 
 args = commandArgs(trailingOnly=TRUE)

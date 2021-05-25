@@ -20,4 +20,4 @@ RUN apt-get update && apt-get install --yes libbz2-dev liblzma-dev libgsl-dev
 RUN R -e "BiocManager::install(c('PWMEnrich','JASPAR2020','BSgenome','rtracklayer','Rsamtools','Rsamtools','Rhtslib','TFBSTools','motifmatchr'))"
 RUN R -e "install.packages(c('ranger','pROC'))"
 RUN conda install -n snakemake -c conda-forge biopython --yes
-
+RUN pip3 install biopython

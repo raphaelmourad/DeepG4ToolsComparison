@@ -89,7 +89,7 @@ modG4huntref <- function(k=25,hl=1.5,chr,seqname='target',with.seq=T,Gseq.only=F
   chrCh <- Views(chr_G4hk, chr_G4hk<=(-j))
   chrGh <- Views(chr_G4hk, chr_G4hk>=j)
   
-  IRC <- reduce(IRanges(start=start(chrCh),end=(end(chrCh)+k-1)))
+  IRC <- IRanges::reduce(IRanges(start=start(chrCh),end=(end(chrCh)+k-1)))
   if (length(IRC)==0)
   {
     nxC <- GRanges()                                
@@ -119,7 +119,7 @@ modG4huntref <- function(k=25,hl=1.5,chr,seqname='target',with.seq=T,Gseq.only=F
                    sequence=nnseqC)
   }
   
-  IRG <- reduce(IRanges(start=start(chrGh),end=(end(chrGh)+k-1)))
+  IRG <- IRanges::reduce(IRanges(start=start(chrGh),end=(end(chrGh)+k-1)))
   if (length(IRG)==0)
   {
     nxG <- GRanges()                                

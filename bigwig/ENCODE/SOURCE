@@ -1,0 +1,27 @@
+Species	Type	Name	Description	Origin	link
+Homo sapiens	GM12878	cell_line	GM12878	https://www.encodeproject.org/experiments/ENCSR000EJD/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX100914.bw
+Homo sapiens	H1	cell_line	H1	https://www.encodeproject.org/experiments/ENCSR000EJN/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX100890.bw
+Homo sapiens	HepG2	cell_line	HepG2	https://www.encodeproject.org/experiments/ENCSR000EJV/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX100912.bw
+Homo sapiens	T47D	cell_line	T47D	https://www.encodeproject.org/experiments/ENCSR000ELT/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX100920.bw
+Homo sapiens	MCF-7	cell_line	MCF-7	https://www.encodeproject.org/experiments/ENCSR000EKV/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX189395.bw
+Homo sapiens	IMR-90	cell_line	IMR-90	https://chip-atlas.org/view?id=SRX012426	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX012426.bw
+Homo sapiens	HUVEC	cell_line	HUVEC	https://chip-atlas.org/view?id=SRX100902	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX100902.bw
+Homo sapiens	HK-2	cell_line	HK-2	https://www.encodeproject.org/experiments/ENCSR634YVQ/	https://www.encodeproject.org/files/ENCFF130AXK/@@download/ENCFF130AXK.bigWig
+Homo sapiens	sigmoid_colon	tissue	sigmoid colon tissue female adult (53 years)	https://www.encodeproject.org/experiments/ENCSR276ITP/	https://www.encodeproject.org/files/ENCFF472PXQ/@@download/ENCFF472PXQ.bigWig
+Homo sapiens	endodermal_cell	tissue	endodermal cell	https://www.encodeproject.org/experiments/ENCSR166KPV/	https://www.encodeproject.org/files/ENCFF358JQH/@@download/ENCFF358JQH.bigWig
+Homo sapiens	lung	tissue	upper lobe of left lung tissue male adult (37 years)	https://www.encodeproject.org/experiments/ENCSR164WOF/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX7089206.bw
+Homo sapiens	coronary_artery	tissue	coronary artery tissue female adult (51 years)	https://www.encodeproject.org/experiments/ENCSR999TSD/	https://www.encodeproject.org/files/ENCFF987LIO/@@download/ENCFF987LIO.bigWig
+Homo sapiens	keratinocyte	tissue	keratinocyte female	https://www.encodeproject.org/experiments/ENCSR000EPQ/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX069149.bw
+Homo sapiens	stromal_cell	tissue	stromal cell of bone marrow male	https://www.encodeproject.org/experiments/ENCSR000EMH/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX201267.bw
+Homo sapiens	cerebellum	tissue	cerebellum tissue male adult (27 years) and male adult (35 years)	https://www.encodeproject.org/experiments/ENCSR000EIJ/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX189413.bw
+Homo sapiens	heart	tissue	heart tissue male adult (27 years) and male adult (35 years)	https://www.encodeproject.org/experiments/ENCSR000EJQ/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX189389.bw
+Homo sapiens	pancreas	tissue	pancreas tissue male adult (34 years)	https://www.encodeproject.org/experiments/ENCSR178JBL/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX201813.bw
+Homo sapiens	stomach	tissue	stomach tissue male adult (34 years)	https://www.encodeproject.org/experiments/ENCSR782SSS/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX201812.bw
+Homo sapiens	skeletal_muscle_cell	tissue	skeletal muscle cell	https://www.encodeproject.org/experiments/ENCSR000EQA/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX069186.bw
+#Homo sapiens	keratinocyte	tissue	keratinocyte female	https://www.encodeproject.org/experiments/ENCSR000ELH/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX100893.bw
+Homo sapiens	frontal_cortex	tissue	frontal cortex tissue male adult (27 years) and male adult (35 years)	https://www.encodeproject.org/experiments/ENCSR000EIK/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX189408.bw
+Homo sapiens	ovary	tissue	ovary tissue female adult (30 years)	https://www.encodeproject.org/experiments/ENCSR712PYJ/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX201821.bw
+#Homo sapiens	pancreas	tissue	pancreas tissue female adult (30 years)	https://www.encodeproject.org/experiments/ENCSR595HZQ/	http://dbarchive.biosciencedbc.jp/kyushu-u/hg19/eachData/bw/SRX201822.bw
+Homo sapiens	stomach	tissue	stomach tissue female adult (51 years)	https://www.encodeproject.org/experiments/ENCSR641ZPF/	https://www.encodeproject.org/files/ENCFF973OWD/@@download/ENCFF973OWD.bigWig
+Homo sapiens	vagina	tissue	vagina tissue female adult (53 years)	https://www.encodeproject.org/experiments/ENCSR437AYW/	https://www.encodeproject.org/files/ENCFF911EQT/@@download/ENCFF911EQT.bigWig
+Homo sapiens	testis	tissue	testis tissue male adult (54 years)	https://www.encodeproject.org/experiments/ENCSR978QUT/	https://www.encodeproject.org/files/ENCFF699BMZ/@@download/ENCFF699BMZ.bigWig

@@ -17,6 +17,8 @@ prediction_genome/results/*
 prediction_genome/data/*
 prediction_genome/.snakemake*
 bigwig/*.bw
+bigwig/ATACseq-AWG/OUT/*.bw
+bigwig/ENCODE/*.bw
 
 .idea
 

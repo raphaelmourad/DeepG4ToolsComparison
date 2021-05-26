@@ -1,0 +1,18 @@
+import csv
+tsv_file = open("SOURCE")
+FILES = {x[1]+"_"+x[2]:x[5] for x in csv.reader(tsv_file, delimiter="\t")}
+
+
+def getFile(wildcards):
+	return(FILES[wildcards.sample])
+
+rule all:
+	input:expand("{sample}.bw",sample=FILES.keys())
+
+rule wget_me:
+	output:
+		temp("{sample}.bw")
+	params:
+		distant_file=getFile
+	shell:
+		"wget --output-document={output} {params.distant_file}"

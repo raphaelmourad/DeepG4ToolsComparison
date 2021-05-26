@@ -1,0 +1,80 @@
+import os
+import glob
+
+FILES = {
+	"ACC":"https://api.gdc.cancer.gov/data/507afbc0-4283-473a-aad0-0432a2d283f7",
+  "BLCA":"https://api.gdc.cancer.gov/data/6db531a0-293c-433a-ad45-ab709af987b7",
+  "BRCA":"https://api.gdc.cancer.gov/data/f1c06cd3-cf35-41cc-bc75-6db273c94273",
+  "CESC":"https://api.gdc.cancer.gov/data/7f648efd-5737-409e-b6c3-1cd6d027fbfb",
+  "CHOL":"https://api.gdc.cancer.gov/data/78b6baeb-8b9b-486b-ae07-d9094cadaaa2",
+  "COAD":"https://api.gdc.cancer.gov/data/26b96cd9-dce0-4340-b15f-9e0afbb6312c",
+  "ESCA":"https://api.gdc.cancer.gov/data/fa18db6a-00fe-410f-982a-04d14d029812",
+  "GBM":"https://api.gdc.cancer.gov/data/ff11b5c0-5c43-443e-9cc7-dd7be60366f1",
+  "HNSC":"https://api.gdc.cancer.gov/data/82ae6c9d-3e4b-4bbf-a87e-e343265dc95a",
+  "KIRC":"https://api.gdc.cancer.gov/data/f5435391-9f73-4edb-bcda-211f9b9afd16",
+  "KIRP":"https://api.gdc.cancer.gov/data/e0beca12-65a8-421d-a9f2-25e37d2899ac",
+  "LGG":"https://api.gdc.cancer.gov/data/8009b5ee-7910-458c-a334-ee08ebcd1b88",
+  "LIHC":"https://api.gdc.cancer.gov/data/3eb9c64c-5afe-4693-a2d7-cd5ff25928a3",
+  "LUAD":"https://api.gdc.cancer.gov/data/b4fca984-42a6-45fe-9909-2f06cd7e3bcc",
+  "LUSC":"https://api.gdc.cancer.gov/data/5f1e254f-6370-4b60-9041-0009f58f259b",
+  "MESO":"https://api.gdc.cancer.gov/data/165a6103-8d8b-4e1e-afd4-e68fe81f30e6",
+  "PCPG":"https://api.gdc.cancer.gov/data/52c10f2d-1265-4434-8155-35f1fccd8811",
+  "PRAD":"https://api.gdc.cancer.gov/data/4677a65c-a9fb-4fb3-9e56-917715551d4c",
+  "SKCM":"https://api.gdc.cancer.gov/data/9b87d207-8c8e-47da-b56b-333bcf85856d",
+  "STAD":"https://api.gdc.cancer.gov/data/a59a7128-62ff-44f9-8f35-497fda8b0beb",
+  "TGCT":"https://api.gdc.cancer.gov/data/2f27b5c3-73ce-4ddc-9c04-eb6187875788",
+  "THCA":"https://api.gdc.cancer.gov/data/ed21baf7-8aca-404e-827a-a1bea9a89128",
+  "UCEC":"https://api.gdc.cancer.gov/data/e447195b-eeb9-459f-83db-9c748aafe395"
+}
+
+def getFile(wildcards):
+	return(FILES[wildcards.cancer])
+
+rule all:
+	input:expand("OUT/{cancer}.bw",cancer=FILES.keys())
+
+rule wget_me:
+	output:
+		temp("{cancer,[A-Za-z0-9]+}.tar.gz")
+	params:
+		distant_file=getFile
+	shell:
+		"wget --output-document={output} {params.distant_file}"
+
+rule extract_me:
+	input:"{cancer}.tar.gz"
+	output:temp(directory("OUT/{cancer,[A-Za-z0-9]+}"))
+	params:
+		dirout="{cancer}"
+	shell:
+		"tar -zxvf {input} --strip-components 8 --one-top-level={params.dirout} -C OUT"
+
+rule create_list_merge:
+  input:
+    my_dir=directory("OUT/{cancer}")
+  output:
+    list_bw=temp("OUT/{cancer,[A-Za-z0-9]+}.txt")
+  run:
+    elm_list = glob.glob(input.my_dir + '/*.bw', recursive=False)
+    with open(output.list_bw,'w') as f:
+      f.write('\n'.join(elm_list))
+
+rule bedgraph_merge:
+  input:
+    my_dir=directory("OUT/{cancer}"),
+    my_txt="OUT/{cancer,[A-Za-z0-9]+}.txt"
+  output:
+    bedgraph=temp("OUT/{cancer,[A-Za-z0-9]+}.bedGraph")
+  conda: "../../envs/bigwigmerge.yaml"
+  shell:
+    "bigWigMerge -inList {input.my_txt} {output.bedgraph}"
+
+rule bedgraph_to_bigwig_average:
+  input:
+    list_bw="OUT/{cancer,[A-Za-z0-9]+}.txt",
+    bedgraph="OUT/{cancer,[A-Za-z0-9]+}.bedGraph"
+  output:
+    bigwig="OUT/{cancer,[A-Za-z0-9]+}.bw"
+  conda: "../../envs/fasta.yaml"
+  script:
+    "../../scripts/Snakemake/bedgraph_to_bigwig_average.R"

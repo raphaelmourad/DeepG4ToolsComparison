@@ -7,6 +7,9 @@ This pipeline generates the results from our paper : [**DeepG4**: A deep
 learning approach to predict active
 G-quadruplexes](https://www.biorxiv.org/content/early/2020/07/23/2020.07.22.215699).
 
+The code to generate the precision/recall curve is available
+[here](prediction_genome).
+
 ### Overview
 
 It’s based on [Snakemake](https://snakemake.readthedocs.io/en/stable/)

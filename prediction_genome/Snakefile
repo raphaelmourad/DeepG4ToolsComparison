@@ -13,15 +13,63 @@ INBED = "bed/" # Where the bed are stored
 NBsplit=100
 SPLITS = list(range(1,NBsplit+1))
 EXPERIMENTS = {
-"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b"},
-"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b"},
-"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b"},
-"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b"},
-"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b"},
-"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b"},
-"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b"},
-"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b"}
+"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM":{"EXP":"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b"},
+"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM":{"EXP":"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b"},
+"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM":{"EXP":"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b"},
+"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM":{"EXP":"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b"},
+"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b_Ctrl_gkmSVM":{"EXP":"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b"},
+"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b_Ctrl_gkmSVM":{"EXP":"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b"},
+"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM":{"EXP":"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b"},
+"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM":{"EXP":"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b"}
 }
+
+TISSUES = [
+# "cerebellum_tissue",
+# "frontal_cortex_tissue",
+# "heart_tissue",
+"HUVEC_cell_line",
+"lung_tissue",
+# "pancreas_tissue",
+# "stomach_tissue",
+# "vagina_tissue",
+# "testis_tissue",
+# "coronary_artery_tissue",
+"GM12878_cell_line",
+"HepG2_cell_line",
+"IMR-90_cell_line",
+"MCF-7_cell_line",
+"sigmoid_colon_tissue",
+"stromal_cell_tissue",
+"endodermal_cell_tissue",
+"H1_cell_line",
+"HK-2_cell_line",
+# "keratinocyte_tissue",
+# "ovary_tissue",
+# "skeletal_muscle_cell_tissue",
+"T47D_cell_line",
+"ACC",
+"BLCA",
+"BRCA",
+"CESC",
+"CHOL",
+"COAD",
+"ESCA",
+"GBM",
+"HNSC",
+"KIRC",
+"KIRP",
+"LGG",
+"LIHC",
+"LUAD",
+"LUSC",
+"MESO",
+"PCPG",
+"PRAD",
+"SKCM",
+"STAD",
+"TGCT",
+"THCA",
+"UCEC"]
 
 ATACFILE = {
 	"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM":["ATAC_entinostat_mean"],
@@ -46,7 +94,54 @@ ATACFILE = {
 	"Peaks_qG4_G4seq_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_Ctrl_gkmSVM":[
 		"ENCFF615FRD",
 		"ENCFF922TLC"
-	]
+	],
+	"cerebellum_tissue":["ENCODE/cerebellum_tissue"],
+	"frontal_cortex_tissue":["ENCODE/frontal_cortex_tissue"],
+	"heart_tissue":["ENCODE/heart_tissue"],
+	"HUVEC_cell_line":["ENCODE/HUVEC_cell_line"],
+	"lung_tissue":["ENCODE/lung_tissue"],
+	"pancreas_tissue":["ENCODE/pancreas_tissue"],
+	"stomach_tissue":["ENCODE/stomach_tissue"],
+	"vagina_tissue":["ENCODE/vagina_tissue"],
+	"testis_tissue":["ENCODE/testis_tissue"],
+	"coronary_artery_tissue":["ENCODE/coronary_artery_tissue"],
+	"GM12878_cell_line":["ENCODE/GM12878_cell_line"],
+	"HepG2_cell_line":["ENCODE/HepG2_cell_line"],
+	"IMR-90_cell_line":["ENCODE/IMR-90_cell_line"],
+	"MCF-7_cell_line":["ENCODE/MCF-7_cell_line"],
+	"sigmoid_colon_tissue":["ENCODE/sigmoid_colon_tissue"],
+	"stromal_cell_tissue":["ENCODE/stromal_cell_tissue"],
+	"endodermal_cell_tissue":["ENCODE/endodermal_cell_tissue"],
+	"H1_cell_line":["ENCODE/H1_cell_line"],
+	"HK-2_cell_line":["ENCODE/HK-2_cell_line"],
+	"keratinocyte_tissue":["ENCODE/keratinocyte_tissue"],
+	"ovary_tissue":["ENCODE/ovary_tissue"],
+	"skeletal_muscle_cell_tissue":["ENCODE/skeletal_muscle_cell_tissue"],
+	"T47D_cell_line":["ENCODE/T47D_cell_line"],
+	"testis_tissue":["ENCODE/testis_tissue"],
+	"ACC":["ATACseq-AWG/OUT/ACC"],
+	"BLCA":["ATACseq-AWG/OUT/BLCA"],
+	"BRCA":["ATACseq-AWG/OUT/BRCA"],
+	"CESC":["ATACseq-AWG/OUT/CESC"],
+	"CHOL":["ATACseq-AWG/OUT/CHOL"],
+	"COAD":["ATACseq-AWG/OUT/COAD"],
+	"ESCA":["ATACseq-AWG/OUT/ESCA"],
+	"GBM":["ATACseq-AWG/OUT/GBM"],
+	"HNSC":["ATACseq-AWG/OUT/HNSC"],
+	"KIRC":["ATACseq-AWG/OUT/KIRC"],
+	"KIRP":["ATACseq-AWG/OUT/KIRP"],
+	"LGG":["ATACseq-AWG/OUT/LGG"],
+	"LIHC":["ATACseq-AWG/OUT/LIHC"],
+	"LUAD":["ATACseq-AWG/OUT/LUAD"],
+	"LUSC":["ATACseq-AWG/OUT/LUSC"],
+	"MESO":["ATACseq-AWG/OUT/MESO"],
+	"PCPG":["ATACseq-AWG/OUT/PCPG"],
+	"PRAD":["ATACseq-AWG/OUT/PRAD"],
+	"SKCM":["ATACseq-AWG/OUT/SKCM"],
+	"STAD":["ATACseq-AWG/OUT/STAD"],
+	"TGCT":["ATACseq-AWG/OUT/TGCT"],
+	"THCA":["ATACseq-AWG/OUT/THCA"],
+	"UCEC":["ATACseq-AWG/OUT/UCEC"]
 }
 
 
@@ -64,7 +159,8 @@ def GetExpBed(wildcards):
 
 rule all:
 	input:
-		# expand(OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.bw",sample=EXPERIMENTS.keys(),model = ["ATACnormBG"]),
+		expand(OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.bed.gz",sample=EXPERIMENTS.keys(),model = ["ATACnormBG"]),
+		expand(OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.bed.gz",sample=TISSUES,model = ["ATACnormBG"]),
 		expand(OUT+"{AUCtype}/{sample}.ATACDeepG4_{model}.tsv",sample=EXPERIMENTS.keys(),model = ["ATACnormBG"],AUCtype=["AUC","AUC_prom","other_metrics_prom","other_metrics"]),
 		expand(OUT+"predict/merged/bin_genome.{tool}.gz",tool = ["quadron_retrained","quadron_score","penguinn_retrained_tsv","penguinn_tsv","G4detector_tsv","G4detector_retrained_tsv","DeepG4_classictuningOH5"]),
 		expand(OUT+"{AUCtype}/{sample}.{tool}.rds",AUCtype=["AUC","AUC_prom"],sample=EXPERIMENTS.keys(),tool = ["quadron_retrained","quadron_score","penguinn_retrained_tsv","penguinn_tsv","G4detector_tsv","G4detector_retrained_tsv","DeepG4_classictuningOH5"]),
@@ -111,7 +207,7 @@ rule normalize_atac:
 # 		genome = "data/{split}.bed",
 # 		atac_data = GetATACnorm
 # 	output:
-# 		atac_merged = OUT+"atac/{sample}_atac_{split}.rds",
+# 		atac_merged = "data/{sample}_atac_{split}.rds",
 # 	benchmark:
 # 		OUT+"benchmarks/{sample}_bed_{split}.benchmark"
 # 	conda: "../envs/deeptools_bigwig.yml"
@@ -129,7 +225,7 @@ rule fasta_atac_from_genome:
 		genome = "data/{split}.bed",
 		atac_data = GetATACnorm
 	output:
-		atac_merged = OUT+"atac/{sample}_atac_{split}.rds"
+		atac_merged = "data/{sample}_atac_{split}.rds"
 	benchmark:
 		OUT+"benchmarks/{sample}_bed_{split}.benchmark"
 	conda: "../envs/deeptools_bigwig.yml"
@@ -384,7 +480,7 @@ DeepG4_to_tsv = "scripts/DeepG4_to_tsv.R"
 rule DeepG4OH4:
 	input:
 		fas="data/{split}.Fa",
-		atac_merged = OUT+"atac/{sample}_atac_{split}.rds"
+		atac_merged = "data/{sample}_atac_{split}.rds"
 	output:
 		out = temp(OUT+"predict/{sample}/splited/{sample}.{split}.ATACDeepG4_{model,[A-Za-z0-9]+}")#TSV    
 	benchmark:

@@ -15,7 +15,8 @@ dist/
 results/*
 prediction_genome/results/*
 prediction_genome/data/*
-bigwig/*
+prediction_genome/.snakemake*
+bigwig/*.bw
 
 .idea
 

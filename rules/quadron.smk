@@ -8,7 +8,7 @@ quadron_retrained_script = "scripts/Snakemake/quadron_retrained_score.R" # for q
 #this rule output a tsv.gz file containing all sequence's scores from the fasta file 
 rule quadron_score:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+    fas = OUTFASTA+"{sample}/{sample}_merged.Fa"
   output:
     quadron_table = OUT+"{sample}/predict/{sample}.quadron_score"#tsv.gz
   params:
@@ -28,7 +28,7 @@ rule quadron_score:
 #used by quadron_retrained
 rule quadron_features:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+    fas = OUTFASTA+"{sample}/{sample}_merged.Fa"
   output:
     quadron_table = OUT+"{sample}/predict/{sample}.quadron_features"#tsv.gz
   params:

@@ -1,7 +1,7 @@
 penguinn_script = "scripts/imports/penguinn/penguinn.py"
 # rule penguinn_old:
 #   input:
-#     fas = OUT+"{sample}/fasta/merged/{sample}_trimmed.Fa"
+#     fas = OUTFASTA+"{sample}/{sample}_trimmed.Fa"
 #   output:
 #     out = OUT+"{sample}/predict/{sample}.penguinn"#TSV
 #   benchmark:
@@ -17,7 +17,7 @@ penguinn_script = "scripts/imports/penguinn/penguinn.py"
 # 
 # rule penguinn_retrained_old:
 #   input:
-#     fas = OUT+"{sample}/fasta/merged/{sample}_trimmed.Fa"
+#     fas = OUTFASTA+"{sample}/{sample}_trimmed.Fa"
 #   output:
 #     out = OUT+"{sample}/predict/{sample}.penguinn_retrained"#TSV
 #   benchmark:
@@ -33,7 +33,7 @@ penguinn_script = "scripts/imports/penguinn/penguinn.py"
 penguinn_script_R = "scripts/Snakemake/penguinn_custom_implementation.R"
 rule penguinn:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_trimmed.Fa"
+    fas = OUTFASTA+"{sample}/{sample}_trimmed.Fa"
   output:
     out = OUT+"{sample}/predict/{sample}.penguinn"#TSV		
   benchmark:
@@ -48,7 +48,7 @@ rule penguinn:
 
 rule penguinn_retrained:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_trimmed.Fa"
+    fas = OUTFASTA+"{sample}/{sample}_trimmed.Fa"
   output:
     out = OUT+"{sample}/predict/{sample}.penguinn_retrained"#TSV
   benchmark:

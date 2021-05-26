@@ -2,7 +2,7 @@ G4detector_script = "scripts/imports/G4detector/code/G4detector.py"
 G4detector_to_tsv = "scripts/Snakemake/G4detector_to_tsv.R"
 rule G4detector:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_trimmed.Fa"
+    fas = OUTFASTA+"{sample}/{sample}_trimmed.Fa"
   output:
     out = OUT+"{sample}/predict/{sample}.G4detector"#TSV		
   benchmark:
@@ -18,7 +18,7 @@ rule G4detector:
 
 rule rule G4detector_tsv_format:
   input:
-    fas=OUT+"{sample}/fasta/merged/{sample}_trimmed.Fa",
+    fas=OUTFASTA+"{sample}/{sample}_trimmed.Fa",
     table=OUT+"{sample}/predict/{sample}.G4detector"
   output:
     OUT+"{sample}/predict/{sample}.G4detector_tsv"
@@ -31,7 +31,7 @@ rule rule G4detector_tsv_format:
 
 rule G4detector_retrained:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_trimmed.Fa"
+    fas = OUTFASTA+"{sample}/{sample}_trimmed.Fa"
   output:
     out = OUT+"{sample}/predict/{sample}.G4detector_retrained"#TSV		
   benchmark:
@@ -48,7 +48,7 @@ rule G4detector_retrained:
 
 rule rule G4detector_retrained_tsv_format:
   input:
-    fas=OUT+"{sample}/fasta/merged/{sample}_trimmed.Fa",
+    fas=OUTFASTA+"{sample}/{sample}_trimmed.Fa",
     table=OUT+"{sample}/predict/{sample}.G4detector_retrained"
   output:
     OUT+"{sample}/predict/{sample}.G4detector_retrained_tsv"

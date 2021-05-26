@@ -6,6 +6,7 @@
 
 
 OUT = "results/" # Where the output are written
+OUTFASTA  = "fasta/" # Where the fasta/accessibility are stored for each experiment
 INBED = "bed/" # Where the fasta are stored
 INATAC = "bigwig/" # Where the accessibility files are stored (in bigwig format)
 # Experiment to be tested by our pipeline

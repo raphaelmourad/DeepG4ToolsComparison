@@ -9,7 +9,7 @@ G4Hunter_retrained_script = "scripts/Snakemake/G4Hunter_retrained.R" # for G4Hun
 #this rule output a tsv file containing all sequence's score from the fasta file 
 rule G4Hunter:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+    fas = OUTFASTA+"{sample}/{sample}_merged.Fa"
   output:
     out = OUT+"{sample}/predict/{sample}.G4hunter"#TSV		
   benchmark:

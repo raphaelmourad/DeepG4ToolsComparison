@@ -4,7 +4,7 @@ qparse_tsv = "scripts/Snakemake/qparse_to_tsv.R"
 
 rule qparse:
   input:
-    fas=OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+    fas=OUTFASTA+"{sample}/{sample}_merged.Fa"
   output:
     OUT+"{sample}/predict/{sample}.qparse"
   benchmark:
@@ -44,7 +44,7 @@ rule qparse_tsv_python:
 
 rule qparse_tsv_R:
   input:
-    fas=OUT+"{sample}/fasta/merged/{sample}_merged.Fa",
+    fas=OUTFASTA+"{sample}/{sample}_merged.Fa",
     qparse_file=OUT+"{sample}/predict/{sample}.qparse_tsv_inter"
   output:
     OUT+"{sample}/predict/{sample}.qparse_{calc}"	

@@ -6,7 +6,7 @@ quadparser_tsv = "scripts/Snakemake/quadparser_to_tsv.R" # for quadparset_to_tsv
 #this rule output a bed file containing the output of quadparser 
 rule quadparser_command:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+    fas = OUTFASTA+"{sample}/{sample}_merged.Fa"
   output:
     quad_parser_table = OUT+"{sample}/predict/{sample}.quadparser"#bed		
   benchmark:
@@ -18,7 +18,7 @@ rule quadparser_command:
 #this rule take as input the output of quadparser_command rule and export it at tsv format, with 'params.calc' score for each sequence
 rule quadparser_tsv_format:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_merged.Fa",
+    fas = OUTFASTA+"{sample}/{sample}_merged.Fa",
     table=OUT+"{sample}/predict/{sample}.quadparser"
   output:
     OUT+"{sample}/predict/{sample}.quadparser_{calc}"

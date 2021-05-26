@@ -11,8 +11,8 @@ DeepG4OH4_script="scripts/Snakemake/DeepG4OH4_ATAC.R"
 
 rule DeepG4OH4:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_merged.Fa",
-    atac_merged = OUT+"{sample}/fasta/merged/{sample}_atac_merged.tsv"
+    fas = OUTFASTA+"{sample}/{sample}_merged.Fa",
+    atac_merged = OUTFASTA+"{sample}/{sample}_atac_merged.tsv"
   output:
     out = OUT+"{sample}/predict/{sample}.ATACDeepG4_{model}"#TSV		
   benchmark:

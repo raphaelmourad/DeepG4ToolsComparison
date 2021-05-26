@@ -2,7 +2,7 @@ G4CatchAll_script = "scripts/imports/G4Catchall/G4Catchall.py"
 G4CatchAll_tsv = "scripts/Snakemake/G4CatchAll_to_tsv.R"
 rule G4CatchAll:
   input:
-    fas=OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+    fas=OUTFASTA+"{sample}/{sample}_merged.Fa"
   output:
     OUT+"{sample}/predict/{sample}.G4CatchAll"
   benchmark:
@@ -14,7 +14,7 @@ rule G4CatchAll:
 
 rule G4CatchAll_tsv_format:
   input:
-    fas=OUT+"{sample}/fasta/merged/{sample}_merged.Fa",
+    fas=OUTFASTA+"{sample}/{sample}_merged.Fa",
     table=OUT+"{sample}/predict/{sample}.G4CatchAll"
   output:
     OUT+"{sample}/predict/{sample}.G4CatchAll_{calc}"

@@ -26,7 +26,7 @@ rule subseq_fasta:
   input:
     fas = OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
   output:
-    fasta_trimmed = OUT+"{sample}/fasta/merged/{sample}_trimmed.Fa"
+    fasta_trimmed = OUTFASTA+"{sample}/{sample}_trimmed.Fa"
   benchmark:
     OUT+"{sample}/benchmarks/{sample}_trimmed.benchmark"
   params:
@@ -42,7 +42,7 @@ rule fastafrom_bed:
     bed_pos = GetExpBed,
     bed_ctrl = GetCtrlBed
   output:
-    fasta_merged = OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+    fasta_merged = OUTFASTA+"{sample}/{sample}_merged.Fa"
   benchmark:
     OUT+"{sample}/benchmarks/{sample}_fasta_bed_merged.benchmark"
   conda: "../envs/fasta.yaml"
@@ -71,7 +71,7 @@ rule atac_from_bed:
     bed_ctrl = GetCtrlBed,
     atac_data = GetATAC
   output:
-    atac_merged = OUT+"{sample}/fasta/merged/{sample}_atac_merged.tsv",
+    atac_merged = OUTFASTA+"{sample}/{sample}_atac_merged.tsv"
   params:
     random_regions = "bed/random_region_for_scaling_min_max.bed",
 	  seuil=2,

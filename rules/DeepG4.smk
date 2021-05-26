@@ -10,7 +10,7 @@ def GetModelDeepG4(wildcards):
 
 rule DeepG4:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+    fas = OUTFASTA+"{sample}/{sample}_merged.Fa"
   output:
     out = OUT+"{sample}/predict/{sample}.DeepG4_{model}"#TSV		
   benchmark:
@@ -28,7 +28,7 @@ rule DeepG4:
 DeepG4_scan_script = "scripts/Snakemake/DeepG4_scan.R"
 rule DeepG4_scan:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+    fas = OUTFASTA+"{sample}/{sample}_merged.Fa"
   output:
     out = OUT+"{sample}/predict/{sample}.DeepG4Scan_{model}"#TSV		
   benchmark:

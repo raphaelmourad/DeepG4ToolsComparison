@@ -7,7 +7,7 @@ pqsfinder = "../scripts/Snakemake/pqsfinder.R"  # for pqsfinder rule
 #this rule output a tsv file containing all sequence's score from the fasta file 
 rule pqsfinder:
   input:
-    fas=OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+    fas=OUTFASTA+"{sample}/{sample}_merged.Fa"
   output:
     tsv=OUT+"{sample}/predict/{sample}.pqsfinder"#tsv
   benchmark:

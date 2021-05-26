@@ -4,7 +4,7 @@ GQRS_Mappper_tsv = "scripts/Snakemake/qgrs_to_tsv.R" # for GQRS_Mappper_tsv_form
 #for each sequence of {input.fas} echo in shell and compute G4 score(s) using GQRS_Mapper_script
 rule GQRS_Mapper:
   input:
-    fas=OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+    fas=OUTFASTA+"{sample}/{sample}_merged.Fa"
   output:
     OUT+"{sample}/predict/{sample}.gqrs_mapper"#bed		
   benchmark:

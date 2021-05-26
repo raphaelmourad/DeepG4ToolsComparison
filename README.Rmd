@@ -274,8 +274,8 @@ cc%>%
   geom_text(aes(label=my_text), position=position_stack(0.45), size=4,lineheight = .8) +
   ylab("Ranking (Accuracy) on 9 datasets\n(Rectangle width is proportional to accuracy)") + xlab("Tools") +
   geom_label(data=cctext,aes(x=Tool,y=accuracy,label = round(meanscore,3)),fill="white",position = position_dodge(width = 1),hjust = -0.1,size=5) +
-  scale_fill_manual("Dataset",values = levels(cc$col_Files)) -> p3
-print(p3)
+  scale_fill_manual("Dataset",values = levels(cc$col_Files))  +theme(axis.text.y = element_text(color = "black",size=16)) -> p3_acc
+print(p3_acc)
 
 
 ```
@@ -325,8 +325,8 @@ cc%>%
   geom_text(aes(label=my_text), position=position_stack(0.45), size=4,lineheight = .8) +
   ylab("Ranking (precision) on 9 datasets\n(Rectangle width is proportional to precision)") + xlab("Tools") +
   geom_label(data=cctext,aes(x=Tool,y=precision,label = round(meanscore,3)),fill="white",position = position_dodge(width = 1),hjust = -0.1,size=5) +
-  scale_fill_manual("Dataset",values = levels(cc$col_Files)) -> p3
-print(p3)
+  scale_fill_manual("Dataset",values = levels(cc$col_Files)) +theme(axis.text.y = element_text(color = "black",size=16))-> p3_FDR
+print(p3_FDR)
 
 
 ```

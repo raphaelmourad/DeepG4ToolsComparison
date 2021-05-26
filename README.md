@@ -128,7 +128,3 @@ or `one-column tsv` file in
 ### Main result
 
 <img src="figures/README-boxplot1-1.png" width="100%" />
-
-<img src="figures/README-boxplot2-1.png" width="100%" />
-
-<img src="figures/README-boxplot3-1.png" width="100%" />

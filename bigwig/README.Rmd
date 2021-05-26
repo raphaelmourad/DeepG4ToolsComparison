@@ -1,0 +1,36 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figures/README-",
+  out.width = "100%"
+)
+```
+
+Directory to store all accessibility data in bigwig format.
+
+### Test dataset
+
+```{r, echo=F, message=FALSE, warning=FALSE}
+require(tidyverse)
+require(kableExtra)
+"SOURCE" %>% read_tsv(col_names = F) %>% setNames(c("Experiment","File","Source1","Source2")) %>% kable(caption = "",format="markdown",escape=F) 
+```
+
+### ENCODE dataset
+
+```{r, echo=F, message=FALSE, warning=FALSE}
+"ENCODE/SOURCE" %>% read_tsv()%>% kable(caption = "",format="markdown",escape=F) 
+```
+
+### Cancer dataset
+
+```{r, echo=F, message=FALSE, warning=FALSE}
+"ATACseq-AWG/SOURCE" %>% read_tsv()%>% kable(caption = "",format="markdown",escape=F) 
+```

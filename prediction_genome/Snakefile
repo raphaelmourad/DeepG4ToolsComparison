@@ -1,0 +1,619 @@
+# Author Vincent ROCHER
+# Snakemake pipeline who generate predictions on whole genome for a list of tools
+# Each tool is configured in a rule and each rule generate an output, usually the score for each sequence in input fasta
+
+
+
+OUT = "results/" # Where the output are written
+INATAC = "../bigwig/" # Where the accessibility files are stored (in bigwig format)
+INATACNORM = "results/atac/bigwig/" # Where the accessibility files are stored (in bigwig format)
+INBED = "bed/" # Where the bed are stored
+
+# CHRS = ["chr"+str(chr) for chr in list(range(1,23))+['X']]
+NBsplit=100
+SPLITS = list(range(1,NBsplit+1))
+EXPERIMENTS = {
+"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b"},
+"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b"},
+"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b"},
+"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b"},
+"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b"},
+"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b"},
+"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b"},
+"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM":{"CTRL":"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM","EXP":"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b"}
+}
+
+ATACFILE = {
+	"TestSet_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM":["ATAC_entinostat_mean"],
+	"Peaks_BG4_G4seq_HaCaT_GSE99205_hg19_201b_Ctrl_gkmSVM":["ATAC_entinostat_mean"],
+	"Peaks_BG4_G4seq_HEKnp_GSE76688_hg19_201b_Ctrl_gkmSVM":[
+		"rhh113_HEKnp_ATAC_701_517_24022015_normalized",
+		"rhh114_HEKnp_ATAC_702_502_24022015_normalized",
+		"rhh115_HEKnp_ATAC_703_503_24022015_normalized",
+		"rhh116_HEKnp_ATAC_701_517_27032015_normalized",
+		"rhh117_HEKnp_ATAC_702_502_27032015_normalized",
+		"rhh118_HEKnp_ATAC_704_504_27032015_normalized"
+	],
+	"Peaks_BG4_G4seq_K562_GSE107690_hg19_201b_Ctrl_gkmSVM":["GSM4133303_YET96_ATAC_K652"],
+	"Peaks_G4P_G4seq_GSE133379_293T_hg19_201b_Ctrl_gkmSVM":["ENCFF716SFD"],
+	"Peaks_G4P_G4seq_GSE133379_A549_hg19_201b_Ctrl_gkmSVM":["ENCFF180FXV"],
+	"Peaks_G4P_G4seq_GSE133379_H1975_hg19_201b_Ctrl_gkmSVM":[
+		"GSM4217852_WT-rep1-ATAC",
+		"GSM4217853_WT-rep2-ATAC"
+
+	],
+	"Peaks_G4P_G4seq_GSE133379_HeLaS3_hg19_201b_Ctrl_gkmSVM":["SRX2370816"],
+	"Peaks_qG4_G4seq_breastCancer_qG4-ChIP-seq-of-breast-cancer-PDTX_hg19_201b_Ctrl_gkmSVM":[
+		"ENCFF615FRD",
+		"ENCFF922TLC"
+	]
+}
+
+
+def GetATAC(wildcards):
+	return([INATAC+x+".bw" for x in ATACFILE[wildcards.sample]])
+	
+def GetATACnorm(wildcards):
+	return([INATACNORM+x+"_bin_rescaled.bw" for x in ATACFILE[wildcards.sample]])
+#A function built to get the positive set from the dictionnary EXPERIMENTS
+def GetExpBed(wildcards):
+	return(INBED+EXPERIMENTS[wildcards.sample]["EXP"]+".bed")
+	
+
+
+
+rule all:
+	input:
+		# expand(OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.bw",sample=EXPERIMENTS.keys(),model = ["ATACnormBG"]),
+		expand(OUT+"{AUCtype}/{sample}.ATACDeepG4_{model}.tsv",sample=EXPERIMENTS.keys(),model = ["ATACnormBG"],AUCtype=["AUC","AUC_prom","other_metrics_prom","other_metrics"]),
+		expand(OUT+"predict/merged/bin_genome.{tool}.gz",tool = ["quadron_retrained","quadron_score","penguinn_retrained_tsv","penguinn_tsv","G4detector_tsv","G4detector_retrained_tsv","DeepG4_classictuningOH5"]),
+		expand(OUT+"{AUCtype}/{sample}.{tool}.rds",AUCtype=["AUC","AUC_prom"],sample=EXPERIMENTS.keys(),tool = ["quadron_retrained","quadron_score","penguinn_retrained_tsv","penguinn_tsv","G4detector_tsv","G4detector_retrained_tsv","DeepG4_classictuningOH5"]),
+		expand(OUT+"{AUCtype}/{sample}.{tool}.tsv",AUCtype=["other_metrics_prom","other_metrics"],sample=EXPERIMENTS.keys(),tool = ["penguinn_retrained_tsv","penguinn_tsv","G4detector_tsv","G4detector_retrained_tsv","DeepG4_classictuningOH5"])
+
+	
+
+#rule to generate binned region of 201 bp, get accessibility data from it, for each bigwig
+
+bin_genome_R = "scripts/bin_genome.R"
+rule bin_genome:
+	output:
+		fasta = expand("data/{split}.Fa",split=SPLITS),
+		bed = expand("data/{split}.bed",split=SPLITS)
+	params:
+		mydir = "data/",
+		NBsplit=NBsplit
+	threads:30
+	benchmark:
+		OUT+"benchmarks/bin_genome.benchmark"
+	conda: "../envs/fasta.yaml"
+	script:
+		bin_genome_R
+
+normalize_atac_script = "scripts/normalize_bed.R"
+
+rule normalize_atac:
+	input:
+		atac_data = INATAC+"{file}.bw"
+	output:
+		atac_normalized = INATACNORM+"{file}_bin_rescaled.bw"
+	params:
+	  random_regions = "../bed/random_region_for_scaling_min_max.bed"
+	threads:2
+	benchmark:
+		OUT+"benchmarks/{file}_bin_rescaled.benchmark"
+	conda: "../envs/fasta.yaml"
+	script:normalize_atac_script
+
+
+# generate_fasta_atac_from_bed = "scripts/generate_fasta_atac_from_bed.R"
+# rule fasta_atac_from_genome:
+# 	input:
+# 		genome = "data/{split}.bed",
+# 		atac_data = GetATACnorm
+# 	output:
+# 		atac_merged = OUT+"atac/{sample}_atac_{split}.rds",
+# 	benchmark:
+# 		OUT+"benchmarks/{sample}_bed_{split}.benchmark"
+# 	conda: "../envs/deeptools_bigwig.yml"
+# 	params:
+# 	  script = generate_fasta_atac_from_bed,
+# 	  out_npz = OUT+"atac/{sample}_atac_{split}.npz",
+# 	  out_tab = OUT+"atac/{sample}_atac_{split}.tab"
+# 	threads: 1
+# 	shell:
+# 	  "multiBigwigSummary BED-file -b {input.atac_data} --BED {input.genome} -o {params.out_npz} --outRawCounts {params.out_tab} -p {threads} && "
+# 	  " Rscript {params.script} {params.out_tab} {output}"
+
+rule fasta_atac_from_genome:
+	input:
+		genome = "data/{split}.bed",
+		atac_data = GetATACnorm
+	output:
+		atac_merged = OUT+"atac/{sample}_atac_{split}.rds"
+	benchmark:
+		OUT+"benchmarks/{sample}_bed_{split}.benchmark"
+	conda: "../envs/deeptools_bigwig.yml"
+	threads:2
+	script:
+	  "scripts/generate_fasta_atac_from_bed_3.R"
+
+# 
+# rule fasta_atac_from_genome_bg_norm:
+# 	input:
+# 		genome = "data/{split}.bed",
+# 		atac_data = GetATACnorm
+# 	output:
+# 		atac_merged = OUT+"atac_bg_norm/{sample}_atac_bg_norm_{split}.rds"
+# 	benchmark:
+# 		OUT+"benchmarks/{sample}_atac_bg_norm_{split}.benchmark"
+# 	conda: "../envs/deeptools_bigwig.yml"
+# 	params:
+# 	  seuil=2,
+# 	  window=5000
+# 	threads:4
+# 	script:
+# 	  "scripts/generate_fasta_atac_from_bed_3.R"
+
+
+
+subseq_fasta = "../scripts/Snakemake/subset_seq.R"
+rule subseq_fasta:
+	input:
+		fasta = "data/{split}.Fa"
+	output:
+		fasta_trimmed ="data/{split}_trimmed.Fa"
+	benchmark:
+		OUT+"benchmarks/binned_{split}_trimmed.benchmark"
+	params:
+		sub = 200
+	conda: "../envs/fasta.yaml"
+	shell:
+		"Rscript "+subseq_fasta+" {params.sub} {input.fasta} {output.fasta_trimmed}"
+
+#prediction with G4 detector
+G4detector_script = "../scripts/imports/G4detector/code/G4detector.py"
+G4detector_to_tsv = "scripts/G4detector_to_tsv.R"
+rule G4detector:
+	input:
+		fas = "data/{split}_trimmed.Fa"
+	output:
+		out = temp(OUT+"predict/splited/{split}.G4detector")#TSV    
+	benchmark:
+		OUT+"benchmarks/{split}_G4detector.benchmark"
+	threads:2
+	params:
+		model = "../scripts/imports/G4detector/models/random/model_rand_K_PDS.h5"
+	conda:
+		"../envs/G4detector.yaml"
+	shell:
+		"python "+G4detector_script+" test {input.fas} {params.model} {output}"
+
+
+rule rule G4detector_tsv_format:
+	input:
+		fas=expand("data/{split}_trimmed.Fa",split=SPLITS),
+		table=expand(OUT+"predict/splited/{split}.G4detector",split=SPLITS)
+	output:
+		OUT+"predict/merged/bin_genome.G4detector_tsv.gz"
+	benchmark:
+		OUT+"benchmarks/bin_genome.G4detector_tsv.benchmark"
+	conda:
+		"../envs/fasta.yaml"
+	script:
+		G4detector_to_tsv
+
+rule G4detector_retrained:
+	input:
+		fas = "data/{split}_trimmed.Fa"
+	output:
+		out = temp(OUT+"predict/splited/{split}.G4detector_retrained")#TSV    
+	benchmark:
+		OUT+"benchmarks/{split}_G4detector_retrained.benchmark"
+	threads:2
+	params:
+		model = "../rds/G4detector_retrained_model_rand_K_PDS.h5"
+	conda:
+		"../envs/G4detector.yaml"
+	shell:
+		"python "+G4detector_script+" test {input.fas} {params.model} {output}"
+
+rule rule G4detector_retrained_tsv_format:
+	input:
+		fas=expand("data/{split}_trimmed.Fa",split=SPLITS),
+		table=expand(OUT+"predict/splited/{split}.G4detector_retrained",split=SPLITS)
+	output:
+		OUT+"predict/merged/bin_genome.G4detector_retrained_tsv.gz"
+	benchmark:
+		OUT+"benchmarks/bin_genome.G4detector_retrained_tsv.benchmark"
+	conda:
+		"../envs/fasta.yaml"
+	script:
+		G4detector_to_tsv
+#prediction with penguinn
+penguinn_script_R = "scripts/penguinn_custom_implementation.R"
+penguinn_to_tsv = "scripts/penguinn_to_tsv.R"
+rule penguinn:
+	input:
+		fas="data/{split}_trimmed.Fa"
+	output:
+		out = temp(OUT+"predict/splited/{split}.penguinn")#TSV    
+	benchmark:
+		OUT+"benchmarks/{split}_penguinn.benchmark"
+	threads:2
+	params:
+		model = "../scripts/imports/penguinn/Models/model_1_1.h5"
+	conda:
+		"../envs/penguinn.yaml"
+	shell:
+		"Rscript "+penguinn_script_R+" {input.fas} {output} {params.model}"
+
+
+rule penguinn_merge:
+	input:
+		fas=expand("data/{split}_trimmed.Fa",split=SPLITS),
+		table=expand(OUT+"predict/splited/{split}.penguinn",split=SPLITS)
+	output:
+		OUT+"predict/merged/bin_genome.penguinn_tsv.gz"
+	benchmark:
+		OUT+"benchmarks/bin_genome.penguinn_tsv.benchmark"
+	conda:
+		"../envs/fasta.yaml"
+	script:
+		penguinn_to_tsv
+
+
+rule penguinn_retrained:
+	input:
+		fas="data/{split}_trimmed.Fa"
+	output:
+		out = temp(OUT+"predict/splited/{split}.penguinn_retrained")#TSV
+	benchmark:
+		OUT+"benchmarks/{split}_penguinn_retrained.benchmark"
+	threads:2
+	params:
+		model = "../rds/penguinn_retrained_best_model_1_1.h5"
+	conda:
+		"../envs/penguinn.yaml"
+	shell:
+		"Rscript "+penguinn_script_R+" {input.fas} {output} {params.model}"
+		
+rule penguinn_merge_retrained:
+	input:
+		fas=expand("data/{split}_trimmed.Fa",split=SPLITS),
+		table=expand(OUT+"predict/splited/{split}.penguinn_retrained",split=SPLITS)
+	output:
+		OUT+"predict/merged/bin_genome.penguinn_retrained_tsv.gz"
+	benchmark:
+		OUT+"benchmarks/bin_genome.penguinn_retrained_tsv.benchmark"
+	conda:
+		"../envs/fasta.yaml"
+	script:
+		penguinn_to_tsv
+
+
+#rule quadron 
+#this rule compute a Fasta file containing positive sequences control sequences to create Quadron score
+#this rule input one fasta file per run 
+#this rule run the script "generate_quadron_dat.R" in the script file
+#this rule output a tsv.gz file containing all sequence's scores from the fasta file 
+generate_quadron_dat = "../scripts/Snakemake/generate_quadron_dat.R" # for quadron rule
+quadron_retrained_script = "../scripts/Snakemake/quadron_retrained_score.R" # for quadron_retrained rule
+quadron_merge = "scripts/quadron_merge.R"
+
+rule quadron_score:
+  input:
+    fas = "data/{split}.Fa"
+  output:
+    quadron_table = temp(OUT+"predict/splited/{split}.quadron_score")#TSV
+  params:
+    type = "score",
+    source="../scripts/Snakemake/Quadron_add_Matthieu.R",
+    Quadron_lib = "../scripts/imports/Quadron"
+  conda:
+    "../envs/quadron.yaml"
+  threads:20
+  benchmark:
+    OUT+"benchmarks/{split}_score_quadron.benchmark"
+  shell:
+    "Rscript "+generate_quadron_dat+" {params.type} {params.Quadron_lib} {params.source} {threads} {input.fas} {output.quadron_table}"
+
+#rule quadron_features
+#Same as quadron rule but used to extract features instead of extracting the score
+#used by quadron_retrained
+rule quadron_features:
+  input:
+    fas = "data/{split}.Fa"
+  output:
+    quadron_table =  temp(OUT+"predict/splited/{split}.quadron_features")#tsv.gz
+  params:
+    type = "features",
+    source="../scripts/Snakemake/Quadron_add_Matthieu.R",
+    Quadron_lib = "../scripts/imports/Quadron"
+  conda:
+    "../envs/quadron.yaml"
+  threads:20
+  benchmark:
+    OUT+"benchmarks/{split}_features_quadron.benchmark"
+  shell:
+    "Rscript "+generate_quadron_dat+" {params.type} {params.Quadron_lib} {params.source} {threads} {input.fas} {output.quadron_table}"
+
+#rule quadron_retrained
+#take quadron_features output as input
+#generate score using the retrained quadron algorithm (xgboost)
+rule quadron_retrained:
+  input:
+    quadron_table = OUT+"predict/splited/{split}.quadron_features"
+  output:
+    score = temp(OUT+"predict/splited/{split}.quadron_retrained")
+  params:
+    model_path = "../rds/Quadron_model_retrained_xgboost_Peaks_BG4_G4seq_HaCaT_GSE76688_hg19_201b_Ctrl_gkmSVM_0.8_42_Sequence_train.model"
+  threads:20
+  conda:
+    "../envs/quadron_retrained.yaml"
+  benchmark:
+    OUT+"benchmarks/{split}_retrained_quadron.benchmark"
+  shell:
+    "Rscript "+quadron_retrained_script+" {params.model_path} {input.quadron_table} {output.score}"
+
+
+
+rule quadron_merge:
+  input:
+    table=expand(OUT+"predict/splited/{split}.quadron_{{type}}",split=SPLITS)
+  output:
+    OUT+"predict/merged/bin_genome.quadron_{type}.gz"
+  benchmark:
+    OUT+"benchmarks/bin_genome.quadron_{type}.benchmark"
+	conda:
+		"../envs/fasta.yaml"
+	script:
+		quadron_merge
+
+
+#prediction with DeepG4
+ModelDeepG4OH4 = {
+"ATACnormBG":"../rds/runs/DeepG4_ATAC_rescale_BW_by_bg_5kb_seuil_2_19_04_2021/2021-04-19T16-32-14Z/best_model.h5",
+}
+
+def GetModelDeepG4OH4(wildcards):
+	return(ModelDeepG4OH4[wildcards.model])
+
+DeepG4OH4_script="../scripts/Snakemake/DeepG4OH4_ATAC.R"
+DeepG4_to_tsv = "scripts/DeepG4_to_tsv.R"
+
+rule DeepG4OH4:
+	input:
+		fas="data/{split}.Fa",
+		atac_merged = OUT+"atac/{sample}_atac_{split}.rds"
+	output:
+		out = temp(OUT+"predict/{sample}/splited/{sample}.{split}.ATACDeepG4_{model,[A-Za-z0-9]+}")#TSV    
+	benchmark:
+		OUT+"benchmarks/{sample}.{split}.ATACDeepG4_{model}.benchmark"
+	params:
+		model = GetModelDeepG4OH4
+	threads:2
+	conda:
+		"../envs/DeepG4.yaml"
+	shell:
+		"Rscript "+DeepG4OH4_script+" {input.fas} {input.atac_merged} {output} {params.model}"
+
+rule DeepG4OH4_merge:
+	input:
+		table=expand(OUT+"predict/{{sample}}/splited/{{sample}}.{split}.ATACDeepG4_{{model}}",split=SPLITS)
+	output:
+		OUT+"predict/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model,[A-Za-z0-9]+}.gz"#TSV  
+	benchmark:
+		OUT+"benchmarks/{sample}.bin_genome.ATACDeepG4_{model}.benchmark"
+	conda:
+		"../envs/fasta.yaml"
+	script:
+		DeepG4_to_tsv
+
+#prediction with DeepG4 (NO ATAC-seq)
+ModelDeepG4OH4noATAC = {
+"classictuningOH5":"../rds/runs/DeepG4_classic_rescale_BW_sampling_02_03_2021/2021-03-02T16-17-28Z/best_model.h5"
+}
+
+def GetModelDeepG4OH4noATAC(wildcards):
+	return(ModelDeepG4OH4noATAC[wildcards.model])
+
+DeepG4OH4noATAC_script="scripts/DeepG4_noATAC.R"
+
+rule DeepG4OH4noATAC:
+	input:
+		fas="data/{split}.Fa"
+	output:
+		out = temp(OUT+"predict/splited/{split}.DeepG4_{model,[A-Za-z0-9]+}")#TSV    
+	benchmark:
+		OUT+"benchmarks/{split}.DeepG4_{model}.benchmark"
+	params:
+		model = GetModelDeepG4OH4noATAC
+	threads:2
+	conda:
+		"../envs/DeepG4.yaml"
+	shell:
+		"Rscript "+DeepG4OH4noATAC_script+" {input.fas} {output} {params.model}"
+
+rule DeepG4OH4noATAC_merge:
+	input:
+		table=expand(OUT+"predict/splited/{split}.DeepG4_{{model}}",split=SPLITS)
+	output:
+		OUT+"predict/merged/bin_genome.DeepG4_{model,[A-Za-z0-9]+}.gz"#TSV  
+	benchmark:
+		OUT+"benchmarks/bin_genome.DeepG4_{model}.benchmark"
+	conda:
+		"../envs/fasta.yaml"
+	script:
+		DeepG4_to_tsv
+
+#compute bedgraph for deepG4 ATAC only
+predict_to_bedgraph = "scripts/predict_to_bedgraph.R"
+rule DeepG4OH4_bedGraph:
+	input:
+		table=OUT+"predict/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.gz"
+	output:
+		bedgraph=temp(OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model,[A-Za-z0-9]+}.bedGraph")
+	benchmark:
+		OUT+"benchmarks/{sample}.bin_genome.ATACDeepG4_{model}_bed.benchmark"
+	threads:5
+	conda:
+		"../envs/fasta.yaml"
+	script:
+		predict_to_bedgraph
+		
+		
+bedgraph_to_bigwig = "scripts/bedgraph_to_bigwig.R"
+rule bedGraph_to_BigWig:
+	input:
+		bedgraph=OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model,[A-Za-z0-9]+}.bedGraph"
+	output:
+		bw=OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model,[A-Za-z0-9]+}.bw"
+	benchmark:
+		OUT+"benchmarks/{sample}.bbedgraph_to_bigwig_{model}.benchmark"
+	threads:5
+	conda:
+		"../envs/fasta.yaml"
+	script:
+		bedgraph_to_bigwig
+		
+rule BigWig_to_bed:
+	input:
+		bw=OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model,[A-Za-z0-9]+}.bw"
+	output:
+		bed=OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model,[A-Za-z0-9]+}.bed.gz"
+	benchmark:
+		OUT+"benchmarks/{sample}.bedgraph_to_bigwig_DeepG4.{model}.benchmark"
+	threads:5
+	conda:
+		"../envs/fasta.yaml"
+	script:
+		"scripts/bigwig_to_bed.R"	
+#Compute auPR for each combination of Tools/fasta
+auPR_script = "scripts/genome_to_aupr.R"
+auPR_prom_script = "scripts/genome_to_aupr_prom.R"
+rule auPR_DeepG4:
+	input:
+		table=OUT+"predict/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.gz",
+		bed=GetExpBed
+	output:
+		tsv=OUT+"AUC/{sample}.ATACDeepG4_{model,[A-Za-z0-9]+}.tsv",
+		rds=OUT+"AUC/{sample}.ATACDeepG4_{model,[A-Za-z0-9]+}.rds",
+		pdf=OUT+"AUC/{sample}.ATACDeepG4_{model,[A-Za-z0-9]+}.pdf"
+	threads:10
+	benchmark:
+		OUT+"benchmarks/{sample}.ATACDeepG4_{model}_AUC.benchmark"
+	conda : "../envs/AUPR.yaml"
+	script:
+		auPR_script
+		
+rule auPR_prom_DeepG4:
+	input:
+		table=OUT+"predict/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.gz",
+		bed=GetExpBed
+	output:
+		tsv=OUT+"AUC_prom/{sample}.ATACDeepG4_{model,[A-Za-z0-9]+}.tsv",
+		rds=OUT+"AUC_prom/{sample}.ATACDeepG4_{model,[A-Za-z0-9]+}.rds",
+		pdf=OUT+"AUC_prom/{sample}.ATACDeepG4_{model,[A-Za-z0-9]+}.pdf"
+	threads:10
+	params:
+	  genes="bed/Genes_hg19_from_Homo.sapiens.bed"
+	benchmark:
+		OUT+"benchmarks/{sample}.ATACDeepG4_{model}_AUC_prom.benchmark"
+	conda : "../envs/AUPR.yaml"
+	script:
+		auPR_prom_script
+
+supp_metrics_script = "scripts/supp_metrics.R"
+
+rule other_metrics_DeepG4:
+  input:
+    table=OUT+"predict/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.gz",
+    bed=GetExpBed
+  output:
+    tsv=OUT+"other_metrics/{sample}.ATACDeepG4_{model,[A-Za-z0-9]+}.tsv"
+  threads:10
+  benchmark:
+    OUT+"{sample}/benchmarks/{sample}.ATACDeepG4_{model}_other_metrics.benchmark"
+  conda : "../envs/AUPR.yaml"
+  script:
+    supp_metrics_script
+
+supp_metrics_script_prom = "scripts/supp_metrics_prom.R"
+rule other_metrics_DeepG4_prom:
+  input:
+    table=OUT+"predict/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.gz",
+    bed=GetExpBed
+  output:
+   tsv=OUT+"other_metrics_prom/{sample}.ATACDeepG4_{model,[A-Za-z0-9]+}.tsv"
+  threads:10
+  params:
+	  genes="bed/Genes_hg19_from_Homo.sapiens.bed"
+  benchmark:
+    OUT+"{sample}/benchmarks/{sample}.ATACDeepG4_{model}_other_metrics_prom.benchmark"
+  conda : "../envs/AUPR.yaml"
+  script:
+    supp_metrics_script_prom
+
+
+rule auPR_tool:
+	input:
+		table=OUT+"predict/merged/bin_genome.{tool}.gz",
+		bed=GetExpBed
+	output:
+		tsv=OUT+"AUC/{sample}.{tool}.tsv",
+		rds=OUT+"AUC/{sample}.{tool}.rds",
+		pdf=OUT+"AUC/{sample}.{tool}.pdf"
+	threads:10
+	benchmark:
+		OUT+"benchmarks/{sample}.{tool}_AUC.benchmark"
+	conda : "../envs/AUPR.yaml"
+	script:
+		auPR_script
+
+rule auPR_prom_tool:
+	input:
+		table=OUT+"predict/merged/bin_genome.{tool}.gz",
+		bed=GetExpBed
+	output:
+		tsv=OUT+"AUC_prom/{sample}.{tool}.tsv",
+		rds=OUT+"AUC_prom/{sample}.{tool}.rds",
+		pdf=OUT+"AUC_prom/{sample}.{tool}.pdf"
+	threads:10
+	params:
+	  genes="bed/Genes_hg19_from_Homo.sapiens.bed"
+	benchmark:
+		OUT+"benchmarks/{sample}.{tool}_AUC_prom.benchmark"
+	conda : "../envs/AUPR.yaml"
+	script:
+		auPR_prom_script
+
+supp_metrics_script = "scripts/supp_metrics.R"
+rule other_metrics_tool:
+  input:
+    table=OUT+"predict/merged/bin_genome.{tool}.gz",
+    bed=GetExpBed
+  output:
+   tsv=OUT+"other_metrics/{sample}.{tool}.tsv"
+  benchmark:
+    OUT+"{sample}/benchmarks/{sample}.{tool}_other_metrics.benchmark"
+  threads:10
+  conda : "../envs/AUPR.yaml"
+  script:
+    supp_metrics_script
+
+supp_metrics_script_prom = "scripts/supp_metrics_prom.R"
+rule other_metrics_prom_tool:
+  input:
+    table=OUT+"predict/merged/bin_genome.{tool}.gz",
+    bed=GetExpBed
+  output:
+   tsv=OUT+"other_metrics_prom/{sample}.{tool}.tsv"
+  threads:10
+  params:
+	  genes="bed/Genes_hg19_from_Homo.sapiens.bed"
+  benchmark:
+    OUT+"{sample}/benchmarks/{sample}.{tool}_other_metrics_prom.benchmark"
+  conda : "../envs/AUPR.yaml"
+  script:
+    supp_metrics_script_prom
+

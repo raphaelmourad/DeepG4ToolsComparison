@@ -47,7 +47,7 @@ each tool in its proper environment.
 Unfortunately, bigwig files are too big to be stored on github, so the
 user will have to download them in order to launch the pipeline.
 Informations to get the files are available in the [bigwig
-directory](bigwig/).
+directory](../bigwig/).
 
 #### Input (auPR)
 

@@ -53,7 +53,7 @@ You have to set the option `--use-conda` in order to install and run each tool i
 
 ### Workflow specifications
 
-Unfortunately, bigwig files are too big to be stored on github, so the user will have to download them in order to launch the pipeline. Informations to get the files are available in the [bigwig directory](bigwig/).
+Unfortunately, bigwig files are too big to be stored on github, so the user will have to download them in order to launch the pipeline. Informations to get the files are available in the [bigwig directory](../bigwig/).
 
 #### Input (auPR)
 

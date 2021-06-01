@@ -24,7 +24,7 @@ subseq_fasta = "scripts/Snakemake/subset_seq.R" # for subseq_fasta rule
 #also used to generate one line fasta to be used by G4detector
 rule subseq_fasta:
   input:
-    fas = OUT+"{sample}/fasta/merged/{sample}_merged.Fa"
+    fas = OUTFASTA+"{sample}/{sample}_merged.Fa"
   output:
     fasta_trimmed = OUTFASTA+"{sample}/{sample}_trimmed.Fa"
   benchmark:

@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
 
 ## DeepG4ToolsComparison: A snakemake pipeline to run and compare G4 DNA prediction tools with DeepG4
 
-This pipeline generates the results from our paper : [__DeepG4__: A deep learning approach to predict active G-quadruplexes](https://www.biorxiv.org/content/early/2020/07/23/2020.07.22.215699).
 
 The code to generate the precision/recall curve is available [here](prediction_genome).
 
@@ -117,29 +116,7 @@ datatools <- tibble(
 "G4detector_retrained",
 "G4detector",
 "quadron_retrained",
-"quadron_score",
-
-"G4CatchAll_max",
-"G4CatchAll_mean",
-"G4CatchAll_sum",
-
-"G4hunter_max",
-"G4hunter_mean",
-"G4hunter_sum",
-"G4hunterRF",
-
-
-"qparse_max",
-"qparse_mean",
-"qparse_sum",
-"quadparser_max",
-"quadparser_mean",
-"quadparser_sum",
-"gqrs_mapper_max",
-"gqrs_mapper_mean",
-"gqrs_mapper_sum",
-
-"pqsfinder"),
+"quadron_score"),
 "Tools" = str_remove(str_extract(Outputs,".+_|.+"),"_"),
 "Methods"=c(
       "DeepG4 using accessibily (DeepG4 in paper)",
@@ -149,31 +126,74 @@ datatools <- tibble(
             "G4detector using custom model trained on __BG4G4seq__ dataset",
             "G4detector using default model",
             "quadron using custom model trained on __BG4G4seq__ dataset",
-            "quadron using default model",
-            
-            "G4CatchAll max score is calculated on each sequence",
-            "G4CatchAll mean score is calculated on each sequence",
-            "G4CatchAll sum score is calculated on each sequence",
-            
-            "G4hunter max score is calculated on each sequence",
-            "G4hunter mean score is calculated on each sequence",
-            "G4hunter sum score is calculated on each sequence",
-            
-            "G4Hunter implemented within a Random Forest",
-            
-            "qparse max score is calculated on each sequence",
-            "qparse mean score is calculated on each sequence",
-            "qparse sum score is calculated on each sequence",
-            "quadparser max score is calculated on each sequence",
-            "quadparser mean score is calculated on each sequence",
-            "quadparser sum score is calculated on each sequence",
-            "gqrs_mapper max score is calculated on each sequence",
-            "gqrs_mapper mean score is calculated on each sequence",
-            "gqrs_mapper sum score is calculated on each sequence",
-            "default pqsfinder score calculated on each sequence"
+            "quadron using default model"
             )
 )
-
+# datatools <- tibble(
+#   "Outputs" = c(
+#     "ATACDeepG4_ATACnormBG",
+# "ATACDeepG4_classictuningOH5",
+# "penguinn_retrained",
+# "penguinn",
+# "G4detector_retrained",
+# "G4detector",
+# "quadron_retrained",
+# "quadron_score",
+# 
+# "G4CatchAll_max",
+# "G4CatchAll_mean",
+# "G4CatchAll_sum",
+# 
+# "G4hunter_max",
+# "G4hunter_mean",
+# "G4hunter_sum",
+# "G4hunterRF",
+# 
+# 
+# "qparse_max",
+# "qparse_mean",
+# "qparse_sum",
+# "quadparser_max",
+# "quadparser_mean",
+# "quadparser_sum",
+# "gqrs_mapper_max",
+# "gqrs_mapper_mean",
+# "gqrs_mapper_sum",
+# 
+# "pqsfinder"),
+# "Tools" = str_remove(str_extract(Outputs,".+_|.+"),"_"),
+# "Methods"=c(
+#       "DeepG4 using accessibily (DeepG4 in paper)",
+# "DeepG4 without accessibility (DeepG4* in paper)",
+#             "penguinn using custom model trained on __BG4G4seq__ dataset",
+#             "penguinn using default model",
+#             "G4detector using custom model trained on __BG4G4seq__ dataset",
+#             "G4detector using default model",
+#             "quadron using custom model trained on __BG4G4seq__ dataset",
+#             "quadron using default model",
+#             
+#             "G4CatchAll max score is calculated on each sequence",
+#             "G4CatchAll mean score is calculated on each sequence",
+#             "G4CatchAll sum score is calculated on each sequence",
+#             
+#             "G4hunter max score is calculated on each sequence",
+#             "G4hunter mean score is calculated on each sequence",
+#             "G4hunter sum score is calculated on each sequence",
+#             
+#             "G4Hunter implemented within a Random Forest",
+#             
+#             "qparse max score is calculated on each sequence",
+#             "qparse mean score is calculated on each sequence",
+#             "qparse sum score is calculated on each sequence",
+#             "quadparser max score is calculated on each sequence",
+#             "quadparser mean score is calculated on each sequence",
+#             "quadparser sum score is calculated on each sequence",
+#             "gqrs_mapper max score is calculated on each sequence",
+#             "gqrs_mapper mean score is calculated on each sequence",
+#             "gqrs_mapper sum score is calculated on each sequence",
+#             "default pqsfinder score calculated on each sequence"
+#             )
+# )
 ```
 
 ```{r show1,echo=F}

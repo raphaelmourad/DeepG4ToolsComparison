@@ -3,10 +3,6 @@
 
 ## DeepG4ToolsComparison: A snakemake pipeline to run and compare G4 DNA prediction tools with DeepG4
 
-This pipeline generates the results from our paper : [**DeepG4**: A deep
-learning approach to predict active
-G-quadruplexes](https://www.biorxiv.org/content/early/2020/07/23/2020.07.22.215699).
-
 The code to generate the precision/recall curve is available
 [here](prediction_genome).
 
@@ -100,33 +96,16 @@ or `one-column tsv` file in
 
 #### Workflow output for each tools :
 
-| Outputs                      | Tools        | Methods                                                       |
-|:-----------------------------|:-------------|:--------------------------------------------------------------|
-| ATACDeepG4\_ATACnormBG       | ATACDeepG4   | DeepG4 using accessibily (DeepG4 in paper)                    |
-| ATACDeepG4\_classictuningOH5 | ATACDeepG4   | DeepG4 without accessibility (DeepG4\* in paper)              |
-| penguinn\_retrained          | penguinn     | penguinn using custom model trained on **BG4G4seq** dataset   |
-| penguinn                     | penguinn     | penguinn using default model                                  |
-| G4detector\_retrained        | G4detector   | G4detector using custom model trained on **BG4G4seq** dataset |
-| G4detector                   | G4detector   | G4detector using default model                                |
-| quadron\_retrained           | quadron      | quadron using custom model trained on **BG4G4seq** dataset    |
-| quadron\_score               | quadron      | quadron using default model                                   |
-| G4CatchAll\_max              | G4CatchAll   | G4CatchAll max score is calculated on each sequence           |
-| G4CatchAll\_mean             | G4CatchAll   | G4CatchAll mean score is calculated on each sequence          |
-| G4CatchAll\_sum              | G4CatchAll   | G4CatchAll sum score is calculated on each sequence           |
-| G4hunter\_max                | G4hunter     | G4hunter max score is calculated on each sequence             |
-| G4hunter\_mean               | G4hunter     | G4hunter mean score is calculated on each sequence            |
-| G4hunter\_sum                | G4hunter     | G4hunter sum score is calculated on each sequence             |
-| G4hunterRF                   | G4hunterRF   | G4Hunter implemented within a Random Forest                   |
-| qparse\_max                  | qparse       | qparse max score is calculated on each sequence               |
-| qparse\_mean                 | qparse       | qparse mean score is calculated on each sequence              |
-| qparse\_sum                  | qparse       | qparse sum score is calculated on each sequence               |
-| quadparser\_max              | quadparser   | quadparser max score is calculated on each sequence           |
-| quadparser\_mean             | quadparser   | quadparser mean score is calculated on each sequence          |
-| quadparser\_sum              | quadparser   | quadparser sum score is calculated on each sequence           |
-| gqrs\_mapper\_max            | gqrsmapper\_ | gqrs\_mapper max score is calculated on each sequence         |
-| gqrs\_mapper\_mean           | gqrsmapper\_ | gqrs\_mapper mean score is calculated on each sequence        |
-| gqrs\_mapper\_sum            | gqrsmapper\_ | gqrs\_mapper sum score is calculated on each sequence         |
-| pqsfinder                    | pqsfinder    | default pqsfinder score calculated on each sequence           |
+| Outputs                      | Tools      | Methods                                                       |
+|:-----------------------------|:-----------|:--------------------------------------------------------------|
+| ATACDeepG4\_ATACnormBG       | ATACDeepG4 | DeepG4 using accessibily (DeepG4 in paper)                    |
+| ATACDeepG4\_classictuningOH5 | ATACDeepG4 | DeepG4 without accessibility (DeepG4\* in paper)              |
+| penguinn\_retrained          | penguinn   | penguinn using custom model trained on **BG4G4seq** dataset   |
+| penguinn                     | penguinn   | penguinn using default model                                  |
+| G4detector\_retrained        | G4detector | G4detector using custom model trained on **BG4G4seq** dataset |
+| G4detector                   | G4detector | G4detector using default model                                |
+| quadron\_retrained           | quadron    | quadron using custom model trained on **BG4G4seq** dataset    |
+| quadron\_score               | quadron    | quadron using default model                                   |
 
 ### Main result
 

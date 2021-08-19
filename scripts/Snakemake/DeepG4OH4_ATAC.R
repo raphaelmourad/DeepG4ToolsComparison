@@ -19,7 +19,7 @@ DNAToNumerical <- function(x,tabv = c("T"=4,"G"=3,"C"=2,"A"=1),lower.case=F,seq.
   }
   arrayout <- array(unlist(listMat), dim = c(nrow(listMat[[1]]), ncol(listMat[[1]]), length(listMat)))
   return(arrayout)
-  
+
 }
 
 args = commandArgs(trailingOnly=TRUE)
@@ -27,7 +27,6 @@ input_fas <- args[1]
 input_rds <- args[2]
 output_file <- args[3]
 custom_model <- args[4]
-
 
 
 G4pos.seq=readDNAStringSet(input_fas)

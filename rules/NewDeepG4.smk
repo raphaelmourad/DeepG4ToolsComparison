@@ -1,6 +1,8 @@
 
 ModelDeepG4OH4 = {
-"ATACnormBG":"rds/runs/DeepG4_ATAC_rescale_BW_by_bg_5kb_seuil_2_19_04_2021/2021-04-19T16-32-14Z/best_model.h5",
+#"ATACnormBG":"rds/runs/DeepG4_ATAC_rescale_BW_by_bg_5kb_seuil_2_19_04_2021/2021-04-19T16-32-14Z/best_model.h5",
+"ATACnormBG":"rds/runs/DeepG4_ATAC_rescale_BW_by_bg_5kb_seuil_2_19_04_2021/2021-07-02T08-48-55Z/best_model.h5",
+"ATACnorm900BG":"rds/runs/DeepG4_ATAC_rescale_BW_by_bg_5kb_seuil_2_19_04_2021/2021-07-06T07-59-11Z/best_model.h5",
 "classictuningOH5":"rds/runs/DeepG4_classic_rescale_BW_sampling_02_03_2021/2021-03-02T16-17-28Z/best_model.h5"
 }
 
@@ -14,7 +16,7 @@ rule DeepG4OH4:
     fas = OUTFASTA+"{sample}/{sample}_merged.Fa",
     atac_merged = OUTFASTA+"{sample}/{sample}_atac_merged.tsv"
   output:
-    out = OUT+"{sample}/predict/{sample}.ATACDeepG4_{model}"#TSV		
+    out = OUT+"{sample}/predict/{sample}.ATACDeepG4_{model}"#TSV
   benchmark:
     OUT+"{sample}/benchmarks/{sample}_ATACDeepG4__{model}.benchmark"
   params:

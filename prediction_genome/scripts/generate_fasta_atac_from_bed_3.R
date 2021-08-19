@@ -18,26 +18,21 @@ library(BSgenome.Hsapiens.UCSC.hg19)
 require(tidyverse)
 
 seqlens <- seqlengths(BSgenome.Hsapiens.UCSC.hg19)
-getScoreBW <- function (one.w, x,meanVal = T) 
+
+getScoreBW <- function (WIG, BED,forScan=F)
 {
-  
-  if(meanVal){
-    lapply(split(x, droplevels(seqnames(x))), function(zz) {
-      message(unique(as.character(seqnames(zz))))
-      cov <- one.w[[unique(as.character(seqnames(zz)))]]
-      score <- IRanges::Views(cov, start = start(zz), end = end(zz))
-      score %>%mean()
-    }) %>% do.call("c",.)
+  res <- do.call("rbind",lapply(split(BED, droplevels(GenomeInfoDb::seqnames(BED))), function(zz) {
+    cov <- WIG[[unique(as.character(GenomeInfoDb::seqnames(zz)))]]
+    score <- IRanges::Views(cov, start = BiocGenerics::start(zz), end = BiocGenerics::end(zz))
+    return(as.matrix(score))
+  }))
+  if(forScan){
+    return(res)
   }else{
-    lapply(split(x, droplevels(seqnames(x))), function(zz) {
-      message(unique(as.character(seqnames(zz))))
-      cov <- one.w[[unique(as.character(seqnames(zz)))]]
-      score <- IRanges::Views(cov, start = start(zz), end = end(zz))
-      score %>% 
-        as.matrix()
-    }) %>% do.call("rbind",.)
+    return(rowMeans(res))
   }
 }
+
 
 #read bed files
 G4pos.bed <- snakemake@input[["genome"]] %>% read_bed()
@@ -48,26 +43,27 @@ selection <- IRanges::reduce(G4pos.bed)
 
 ATAC_dataset <- snakemake@input[["atac_data"]]
 
-
+G4pos.bed <- BiocGenerics::sort(GenomeInfoDb::sortSeqlevels(G4pos.bed))
 G4all.atac <- ATAC_dataset %>% map(function(x){
   xbw <- x %>% import.bw(selection = BigWigSelection(selection),as="RleList")
   res <- xbw %>% getScoreBW(G4pos.bed)
   res[is.na(res)] <- 0
   return(res)
 })%>% purrr::reduce(`+`) / length(ATAC_dataset)
-
+message("step - get ATAC signal on bins: OK")
 G4pos.bed.bg <- G4pos.bed %>% anchor_center() %>% mutate(width=my_window_bg)%>%
   as_tibble() %>%
   left_join(enframe(seqlens),by = c("seqnames"="name")) %>%
-  mutate(end = ifelse(end>value,value,end)) %>% dplyr::select(-width) %>% as_granges() 
+  mutate(end = ifelse(end>value,value,end)) %>% dplyr::select(-width) %>% as_granges()
 G4all.atac.bg <- ATAC_dataset %>% map(function(x){
   xbw <- x %>% import.bw(selection = BigWigSelection(selection),as="RleList")
   res <- xbw %>% getScoreBW(G4pos.bed.bg)
   res[is.na(res)] <- 0
   return(res)
 })%>% purrr::reduce(`+`) / length(ATAC_dataset)
-
+message("step - get ATAC signal on background bins: OK")
 my_test <- (G4all.atac/G4all.atac.bg)<my_seuil_bg
 G4all.atac[my_test] <- 0
-
-saveRDS(G4all.atac,snakemake@output[["atac_merged"]])
+message("step - Replace values based on treshold: OK")
+# saveRDS(G4all.atac,snakemake@output[["atac_merged"]])
+tibble(atac_seq=G4all.atac) %>% write_tsv(snakemake@output[["atac_merged"]],col_names = F)

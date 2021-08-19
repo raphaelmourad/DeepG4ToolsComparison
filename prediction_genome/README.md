@@ -94,7 +94,3 @@ ATACFILE = {
 #### Rulegraph :
 
 <img src="rulegraph.svg" width="150%" />
-
-### Main result
-
-<img src="figures/README-boxplot1-1.png" width="100%" /><img src="figures/README-boxplot1-2.png" width="100%" /><img src="figures/README-boxplot1-3.png" width="100%" /><img src="figures/README-boxplot1-4.png" width="100%" /><img src="figures/README-boxplot1-5.png" width="100%" /><img src="figures/README-boxplot1-6.png" width="100%" /><img src="figures/README-boxplot1-7.png" width="100%" /><img src="figures/README-boxplot1-8.png" width="100%" />

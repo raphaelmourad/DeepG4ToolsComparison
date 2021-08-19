@@ -106,7 +106,3 @@ or `one-column tsv` file in
 | G4detector                   | G4detector | G4detector using default model                                |
 | quadron\_retrained           | quadron    | quadron using custom model trained on **BG4G4seq** dataset    |
 | quadron\_score               | quadron    | quadron using default model                                   |
-
-### Main result
-
-<img src="figures/README-boxplot1-1.png" width="100%" />

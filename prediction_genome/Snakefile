@@ -159,12 +159,12 @@ def GetExpBed(wildcards):
 
 rule all:
 	input:
-		expand(OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.bed.gz",sample=EXPERIMENTS.keys(),model = ["ATACnormBG"]),
-		expand(OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.bed.gz",sample=TISSUES,model = ["ATACnormBG"]),
-		expand(OUT+"{AUCtype}/{sample}.ATACDeepG4_{model}.tsv",sample=EXPERIMENTS.keys(),model = ["ATACnormBG"],AUCtype=["AUC","AUC_prom","other_metrics_prom","other_metrics"]),
-		expand(OUT+"predict/merged/bin_genome.{tool}.gz",tool = ["quadron_retrained","quadron_score","penguinn_retrained_tsv","penguinn_tsv","G4detector_tsv","G4detector_retrained_tsv","DeepG4_classictuningOH5"]),
-		expand(OUT+"{AUCtype}/{sample}.{tool}.rds",AUCtype=["AUC","AUC_prom"],sample=EXPERIMENTS.keys(),tool = ["quadron_retrained","quadron_score","penguinn_retrained_tsv","penguinn_tsv","G4detector_tsv","G4detector_retrained_tsv","DeepG4_classictuningOH5"]),
-		expand(OUT+"{AUCtype}/{sample}.{tool}.tsv",AUCtype=["other_metrics_prom","other_metrics"],sample=EXPERIMENTS.keys(),tool = ["penguinn_retrained_tsv","penguinn_tsv","G4detector_tsv","G4detector_retrained_tsv","DeepG4_classictuningOH5"])
+		expand(OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.bed.gz",sample=EXPERIMENTS.keys(),model = ["ATACnorm900BG"]),
+		expand(OUT+"bed/{sample}/merged/{sample}.bin_genome.ATACDeepG4_{model}.bed.gz",sample=TISSUES,model = ["ATACnorm900BG"]),
+		expand(OUT+"{AUCtype}/{sample}.ATACDeepG4_{model}.tsv",sample=EXPERIMENTS.keys(),model = ["ATACnorm900BG"],AUCtype=["AUC","AUC_prom","other_metrics_prom","other_metrics"])
+		# expand(OUT+"predict/merged/bin_genome.{tool}.gz",tool = ["quadron_retrained","quadron_score","penguinn_retrained_tsv","penguinn_tsv","G4detector_tsv","G4detector_retrained_tsv","DeepG4_classictuningOH5"]),
+		# expand(OUT+"{AUCtype}/{sample}.{tool}.rds",AUCtype=["AUC","AUC_prom"],sample=EXPERIMENTS.keys(),tool = ["quadron_retrained","quadron_score","penguinn_retrained_tsv","penguinn_tsv","G4detector_tsv","G4detector_retrained_tsv","DeepG4_classictuningOH5"]),
+		# expand(OUT+"{AUCtype}/{sample}.{tool}.tsv",AUCtype=["other_metrics_prom","other_metrics"],sample=EXPERIMENTS.keys(),tool = ["penguinn_retrained_tsv","penguinn_tsv","G4detector_tsv","G4detector_retrained_tsv","DeepG4_classictuningOH5"])
 
 	
 
@@ -225,11 +225,14 @@ rule fasta_atac_from_genome:
 		genome = "data/{split}.bed",
 		atac_data = GetATACnorm
 	output:
-		atac_merged = "data/{sample}_atac_{split}.rds"
+		atac_merged = "data/{sample}_atac_{split}.tsv.gz"
 	benchmark:
 		OUT+"benchmarks/{sample}_bed_{split}.benchmark"
+	params:
+	    seuil=2,
+	    window=5000
 	conda: "../envs/deeptools_bigwig.yml"
-	threads:2
+	threads:5
 	script:
 	  "scripts/generate_fasta_atac_from_bed_3.R"
 
@@ -468,7 +471,10 @@ rule quadron_merge:
 
 #prediction with DeepG4
 ModelDeepG4OH4 = {
-"ATACnormBG":"../rds/runs/DeepG4_ATAC_rescale_BW_by_bg_5kb_seuil_2_19_04_2021/2021-04-19T16-32-14Z/best_model.h5",
+# "ATACnormBG":"../rds/runs/DeepG4_ATAC_rescale_BW_by_bg_5kb_seuil_2_19_04_2021/2021-04-19T16-32-14Z/best_model.h5",
+"ATACnormBG":"../rds/runs/DeepG4_ATAC_rescale_BW_by_bg_5kb_seuil_2_19_04_2021/2021-07-02T08-48-55Z/best_model.h5",
+"ATACBWsampling":"../rds/runs/DeepG4_ATAC_rescale_BW_sampling_02_03_2021/2021-03-02T16-01-34Z/best_model.h5",
+"ATACnorm900BG":"../rds/runs/DeepG4_ATAC_rescale_BW_by_bg_5kb_seuil_2_19_04_2021/2021-07-06T07-59-11Z/best_model.h5"
 }
 
 def GetModelDeepG4OH4(wildcards):
@@ -480,7 +486,7 @@ DeepG4_to_tsv = "scripts/DeepG4_to_tsv.R"
 rule DeepG4OH4:
 	input:
 		fas="data/{split}.Fa",
-		atac_merged = "data/{sample}_atac_{split}.rds"
+		atac_merged = "data/{sample}_atac_{split}.tsv.gz"
 	output:
 		out = temp(OUT+"predict/{sample}/splited/{sample}.{split}.ATACDeepG4_{model,[A-Za-z0-9]+}")#TSV    
 	benchmark:

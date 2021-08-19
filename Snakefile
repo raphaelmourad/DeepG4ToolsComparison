@@ -49,7 +49,7 @@ ATACFILE = {
 #A function built to get the positive set from the dictionnary EXPERIMENTS
 def GetExp(wildcards):
   return(IN+EXPERIMENTS[wildcards.sample]["EXP"]+".Fa")
-  
+
 #A function built to get the negative set from the dictionnary EXPERIMENTS
 def GetCtrl(wildcards):
   return(IN+EXPERIMENTS[wildcards.sample]["CTRL"]+".Fa")
@@ -57,7 +57,7 @@ def GetCtrl(wildcards):
 #A function built to get the positive set from the dictionnary EXPERIMENTS
 def GetExpBed(wildcards):
   return(INBED+EXPERIMENTS[wildcards.sample]["EXP"]+".bed")
-  
+
 #A function built to get the negative set from the dictionnary EXPERIMENTS
 def GetCtrlBed(wildcards):
   return(INBED+EXPERIMENTS[wildcards.sample]["CTRL"]+".bed")
@@ -88,13 +88,13 @@ rule all:
   input:
     expand(OUT+"{sample}/{metrics}/{sample}.{tools}.tsv",metrics = ["other_metrics","AUC"],
     sample=EXPERIMENTS.keys(),
-    tools = ["ATACDeepG4_classictuningOH5","ATACDeepG4_ATACnormBG","G4detector_tsv","G4detector_retrained_tsv","penguinn","penguinn_retrained"]),
+    tools = ["ATACDeepG4_classictuningOH5","ATACDeepG4_ATACnormBG","ATACDeepG4_ATACnorm900BG","G4detector_tsv","G4detector_retrained_tsv","penguinn","penguinn_retrained"]),
     expand(OUT+"{sample}/AUC/{sample}.{tools}.tsv",metrics = ["other_metrics","AUC"],sample=EXPERIMENTS.keys(),
-    # tools = ["qparse_mean","qparse_sum","qparse_max","quadron_score","quadron_retrained","pqsfinder","quadparser_max","quadparser_mean","quadparser_sum","G4CatchAll_sum","G4CatchAll_mean","G4CatchAll_max","G4hunter_max","G4hunter_mean","G4hunter_sum","G4hunterRF","gqrs_mapper_max","gqrs_mapper_sum","gqrs_mapper_mean"]) # 
-    tools = ["quadron_score","quadron_retrained"]) # 
+    # tools = ["qparse_mean","qparse_sum","qparse_max","quadron_score","quadron_retrained","pqsfinder","quadparser_max","quadparser_mean","quadparser_sum","G4CatchAll_sum","G4CatchAll_mean","G4CatchAll_max","G4hunter_max","G4hunter_mean","G4hunter_sum","G4hunterRF","gqrs_mapper_max","gqrs_mapper_sum","gqrs_mapper_mean"]) #
+    tools = ["quadron_score","quadron_retrained"]) #
   output:
     expand(OUT+"recap_AUC_{nb}.tsv",nb=[1,2,3,4])
-  conda : "envs/AUC.yaml"  
+  conda : "envs/AUC.yaml"
   script:
     "scripts/Snakemake/report_AUC.R"
 

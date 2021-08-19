@@ -3,6 +3,9 @@
 
 ## DeepG4ToolsComparison: A snakemake pipeline to run and compare G4 DNA prediction tools with DeepG4
 
+The predictions for differents tissues and cancer with DeepG4 is
+available [here](prediction_genome/bed/predictions)
+
 The code to generate the precision/recall curve is available
 [here](prediction_genome).
 

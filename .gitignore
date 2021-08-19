@@ -13,6 +13,7 @@ dist/
 .venv/*
 
 results/*
+prediction_genome/results/*
 prediction_genome/data/*
 prediction_genome/.snakemake*
 bigwig/*.bw
